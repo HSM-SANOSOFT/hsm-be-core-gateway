@@ -3,7 +3,7 @@ import { RpcException } from '@nestjs/microservices';
 import { DatabaseService } from './database/database.service';
 import {PromocionesDto} from './dto/promociones.dto';
 import {ParroquiasDto} from './dto/parroquias.dto';
-
+import {ValidaCedulaDto} from './dto/validacedula.dto'
 
 
 @Injectable()
@@ -31,7 +31,6 @@ export class ComunesService {
     }
     return datos;
   }
-
 
   async promociones(promocionesDto:PromocionesDto){
     const { filtro } = promocionesDto;
@@ -75,4 +74,59 @@ export class ComunesService {
     }
     return datos;
   }
+
+  async validarCedula(validacedulaDto: ValidaCedulaDto) {
+    const { ci } = validacedulaDto;
+
+    if (!/^\d{10}$/.test(ci)) {
+      throw new RpcException({
+        status: 404,
+        message: 'La cedula ingresada debe de tener 10 numero',
+      });
+
+    }
+  
+    // Extraer los primeros dos dígitos y verificar que sean un código de provincia válido
+    const provincia = parseInt(ci.substring(0, 2), 10);
+    if ((provincia < 1 || provincia > 24) && provincia !== 30) {
+      throw new RpcException({
+        status: 404,
+        message: 'Por favor, verifique el número de cédula ingresado, ya que no corresponde a ninguna provincia válida ni al código asignado para el extranjero.',
+      });
+    }
+  
+    const digitos = ci.split('').map(Number);
+    const digitoVerificador = digitos[9];
+    const coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+  
+    let suma = 0;
+    for (let i = 0; i < coeficientes.length; i++) {
+      let producto = digitos[i] * coeficientes[i];
+      if (producto >= 10) {
+        producto -= 9;
+      }
+      suma += producto;
+    }
+  
+    const residuo = suma % 10;
+    const digitoCalculado = residuo === 0 ? 0 : 10 - residuo;
+
+    let estado:any;
+    let mensaje = '';
+
+    if(digitoCalculado === digitoVerificador){
+      estado = 201;
+      mensaje = "Numero de Cedula correcto";
+    }else{
+      estado = 404;
+      mensaje = "Numero de cedula incorrecto";
+    }
+
+    throw new RpcException({
+      status: 404,
+      message: mensaje
+    });
+  }
+
+  
 }

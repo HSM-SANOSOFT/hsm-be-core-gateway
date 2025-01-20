@@ -3,6 +3,7 @@ import { Payload } from '@nestjs/microservices';
 import {PromocionesDto} from './dto/promociones.dto';
 import {ParroquiasDto} from './dto/parroquias.dto';
 import { ComunesService } from './comunes.service';
+import {ValidaCedulaDto} from './dto/validacedula.dto'
 
 @Controller('comunes')
 export class  ComunesController {
@@ -32,5 +33,10 @@ export class  ComunesController {
   @Post('parroquias')
   parroquias(@Payload() parroquiasDto: ParroquiasDto) {
     return this.comunesService.parroquias(parroquiasDto);
+  }
+
+  @Post('validarCedula')
+  validarCedula(@Payload() validacedulaDto: ValidaCedulaDto){
+    return this.comunesService.validarCedula(validacedulaDto);
   }
 }
