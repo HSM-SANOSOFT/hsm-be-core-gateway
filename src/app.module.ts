@@ -16,6 +16,7 @@ import { PersonalModule } from './personal/personal.module';
 import { UsersModule } from './users/users.module';
 import { ComunesModule } from './comunes/comunes.module';
 import { WebsocketModule } from './websocket/websocket.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { WebsocketModule } from './websocket/websocket.module';
     UsersModule,
     WebsocketModule,
     ComunesModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthTokenGuard }],
