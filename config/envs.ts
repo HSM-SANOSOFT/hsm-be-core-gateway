@@ -97,7 +97,7 @@ const envsSchema = joi
     EXAMENES_MICROSERVICE_HOST: joi.string().default('localhost'),
     EXAMENES_MICROSERVICE_PORT: joi.number().required(),
 
-    _MICROSERVICE_NAME: joi.string().required(),
+    FACTURACION_MICROSERVICE_NAME: joi.string().required(),
     FACTURACION_MICROSERVICE_HOST: joi.string().default('localhost'),
     FACTURACION_MICROSERVICE_PORT: joi.number().required(),
 
