@@ -5,6 +5,7 @@ import { AuthTokenGuard } from '../guards/auth.guard';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { CommonModule } from './common/common.module';
 import { ComsModule } from './coms/coms.module';
 import { ExamenesModule } from './examenes/examenes.module';
 import { FacturacionModule } from './facturacion/facturacion.module';
@@ -14,9 +15,7 @@ import { MedicosModule } from './medicos/medicos.module';
 import { PacientesModule } from './pacientes/pacientes.module';
 import { PersonalModule } from './personal/personal.module';
 import { UsersModule } from './users/users.module';
-import { ComunesModule } from './comunes/comunes.module';
 import { WebsocketModule } from './websocket/websocket.module';
-import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -31,7 +30,6 @@ import { CommonModule } from './common/common.module';
     PersonalModule,
     UsersModule,
     WebsocketModule,
-    ComunesModule,
     CommonModule,
   ],
   controllers: [AppController],

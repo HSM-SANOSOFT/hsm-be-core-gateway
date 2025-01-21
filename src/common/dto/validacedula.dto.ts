@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumberString } from 'class-validator';
 
-export class RegistroCivilDto {
+export class ValidaCedulaDto {
   @IsNumberString()
   @IsNotEmpty()
   ci: string;
