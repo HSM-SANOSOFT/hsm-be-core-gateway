@@ -6,6 +6,8 @@ import { catchError } from 'rxjs';
 import { AllPacienteDto } from './dto/allpaciente.dto';
 import { RegistroCivilDto } from './dto/registroCivil.dto';
 import { TablePacientesDto } from './dto/tablepacientes.dto';
+import { RegistroPacientesDto } from './dto/registropacientes.dto';
+
 
 @Controller('pacientes')
 export class PacientesController {
@@ -48,6 +50,16 @@ export class PacientesController {
   @Post('updatepaciente')
   Updatepaciente(@Body() tablepacientesDto: TablePacientesDto) {
     return this.client.send('UpdatePaciente', tablepacientesDto).pipe(
+      catchError(err => {
+        throw new RpcException(err);
+      }),
+    );
+  }
+
+
+  @Post('InsertarPaciente')
+  InsertarPaciente(@Body() registropacientesDto: RegistroPacientesDto) {
+    return this.client.send('InsertarPaciente', registropacientesDto).pipe(
       catchError(err => {
         throw new RpcException(err);
       }),
