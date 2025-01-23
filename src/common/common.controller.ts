@@ -22,7 +22,7 @@ export class CommonController {
     return this.client.send('initMS', {});
   }
 
-  @Post('combobox')
+  @Get('combobox')
   combobox() {
     return this.client.send('combobox', {});
   }
