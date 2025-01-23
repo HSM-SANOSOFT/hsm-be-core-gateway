@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Ip, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Ip, Param, Post } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import * as ms from 'config/services';
 import { Public } from 'decorators/public.decorator';
@@ -109,6 +109,15 @@ export class UsersController {
   @Post('allUsers')
   allUsers(@Body() allUsersDto: AllUserDto) {
     return this.Client.send('allUsers', allUsersDto).pipe(
+      catchError(err => {
+        throw new RpcException(err);
+      }),
+    );
+  }
+
+  @Get('getUser/:userCode')
+  getUser(@Param('userCode') userCode: string) {
+    return this.Client.send('getUser', { userCod: userCode }).pipe(
       catchError(err => {
         throw new RpcException(err);
       }),

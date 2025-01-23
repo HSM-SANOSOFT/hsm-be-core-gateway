@@ -9,13 +9,38 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
 
     const rcpError = exception.getError();
 
-    if (
+    // Check if the error is an array (DTO validation error)
+    if (Array.isArray(rcpError)) {
+      // Consolidate validation messages into a single array
+      const validationMessages = rcpError.flatMap(err =>
+        Object.values(err.constraints || {}),
+      );
+
+      // Respond with the desired structure
+      response.status(400).json({
+        message: validationMessages,
+        error: 'Bad Request',
+        statusCode: 400,
+      });
+    } else if (
       typeof rcpError === 'object' &&
       'status' in rcpError &&
       'message' in rcpError
     ) {
-      const status = rcpError.status;
-      response.status(status).json(rcpError);
+      // Handle general RpcException errors
+      const status = rcpError.status || 500; // Default to 500 if status is not provided
+      response.status(status).json({
+        statusCode: status,
+        message: rcpError.message,
+        error: 'Error',
+      });
+    } else {
+      // Fallback for unexpected error formats
+      response.status(500).json({
+        statusCode: 500,
+        message: ['Internal server error'],
+        error: 'Internal Server Error',
+      });
     }
   }
 }
