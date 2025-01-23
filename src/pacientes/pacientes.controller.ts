@@ -58,11 +58,12 @@ export class PacientesController {
 
 
   @Post('InsertarPaciente')
-  InsertarPaciente(@Body() registropacientesDto: RegistroPacientesDto) {
-    return this.client.send('InsertarPaciente', registropacientesDto).pipe(
+  InsertarPaciente(@Body() data:any) {
+    return this.client.send('InsertarPaciente', data).pipe(
       catchError(err => {
         throw new RpcException(err);
       }),
     );
   }
+
 }
