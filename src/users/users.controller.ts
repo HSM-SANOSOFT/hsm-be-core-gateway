@@ -7,7 +7,6 @@ import { catchError } from 'rxjs';
 import { AllUserDto } from './dto/allusers.dto';
 import { DataUserDto } from './dto/datauser.dto';
 import { PasswordChangeDto } from './dto/passwordChange.dto';
-import { UserMenuDto } from './dto/userMenu.dto';
 import { UserUnlockDto } from './dto/userUnlock.dto';
 import { ValidateCodeDto } from './dto/validateCode.dto';
 
@@ -86,7 +85,7 @@ export class UsersController {
 
   @Public()
   @Post('userMenu')
-  userMenu(@Body() usermenuDto:any) {
+  userMenu(@Body() usermenuDto: any) {
     return this.Client.send('userMenu', usermenuDto).pipe(
       catchError(err => {
         throw new RpcException(err);
@@ -115,9 +114,9 @@ export class UsersController {
     );
   }
 
-  @Get('getUser/:userCode')
+  @Get('getUserData/:userCode')
   getUser(@Param('userCode') userCode: string) {
-    return this.Client.send('getUser', { userCod: userCode }).pipe(
+    return this.Client.send('getUser', { userCode: userCode }).pipe(
       catchError(err => {
         throw new RpcException(err);
       }),
