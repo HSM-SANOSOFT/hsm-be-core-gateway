@@ -86,7 +86,7 @@ export class UsersController {
 
   @Public()
   @Post('userMenu')
-  userMenu(@Body() usermenuDto: UserMenuDto) {
+  userMenu(@Body() usermenuDto:any) {
     return this.Client.send('userMenu', usermenuDto).pipe(
       catchError(err => {
         throw new RpcException(err);
