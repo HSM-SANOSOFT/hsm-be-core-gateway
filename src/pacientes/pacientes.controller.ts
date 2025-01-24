@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Inject, Post,Ip } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Ip,
+  Logger,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import * as ms from 'config/services';
 import { catchError } from 'rxjs';
@@ -6,12 +15,12 @@ import { catchError } from 'rxjs';
 import { AllPacienteDto } from './dto/allpaciente.dto';
 import { RegistroCivilDto } from './dto/registroCivil.dto';
 import { TablePacientesDto } from './dto/tablepacientes.dto';
-import { RegistroPacientesDto } from './dto/registropacientes.dto';
-
 
 @Controller('pacientes')
 export class PacientesController {
   constructor(@Inject(ms.PACIENTES_SERVICE) private readonly client) {}
+
+  private readonly logger = new Logger(PacientesController.name);
 
   @Get('init/co')
   InitCo() {
@@ -37,7 +46,7 @@ export class PacientesController {
   }
 
   @Post('dataRCPaciente')
-  dataRCPaciente(@Ip() ip: string,@Body() registroCivilDto: RegistroCivilDto) {
+  dataRCPaciente(@Ip() ip: string, @Body() registroCivilDto: RegistroCivilDto) {
     ip = ip.includes('::ffff:') ? ip.split('::ffff:')[1] : ip;
     const payload = { ...registroCivilDto, ip };
     return this.client.send('dataRCPaciente', payload).pipe(
@@ -56,9 +65,8 @@ export class PacientesController {
     );
   }
 
-
   @Post('InsertarPaciente')
-  InsertarPaciente(@Body() data:any) {
+  InsertarPaciente(@Body() data: any) {
     return this.client.send('InsertarPaciente', data).pipe(
       catchError(err => {
         throw new RpcException(err);
@@ -66,4 +74,12 @@ export class PacientesController {
     );
   }
 
+  @Get('getPaciente/:hc')
+  GetPaciente(@Param('hc') hc: string) {
+    return this.client.send('GetPaciente', { hc: hc }).pipe(
+      catchError(err => {
+        throw new RpcException(err);
+      }),
+    );
+  }
 }
