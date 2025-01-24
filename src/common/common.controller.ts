@@ -5,6 +5,9 @@ import { envs } from 'config';
 import { ParroquiasDto } from './dto/parroquias.dto';
 import { PromocionesDto } from './dto/promociones.dto';
 import { ValidaCedulaDto } from './dto/validacedula.dto';
+import { OcupacionesDto } from './dto/ocupaciones.dto';
+
+
 
 @Controller('common')
 export class CommonController {
@@ -41,4 +44,12 @@ export class CommonController {
   validarCedula(@Payload() validacedulaDto: ValidaCedulaDto) {
     return this.client.send('validarCedula', validacedulaDto);
   }
+
+  @Post('ocupaciones')
+  ocupaciones(@Payload() ocupacionesDto: OcupacionesDto) {
+    return this.client.send('ocupaciones', ocupacionesDto);
+  }
+
+
+  
 }
