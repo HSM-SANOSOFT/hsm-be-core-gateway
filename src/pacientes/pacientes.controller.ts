@@ -66,4 +66,14 @@ export class PacientesController {
     );
   }
 
+
+  @Post('categorizacionPaciente')
+  categorizacionPaciente(@Body() data:any) {
+    return this.client.send('categorizacionPaciente', data).pipe(
+      catchError(err => {
+        throw new RpcException(err);
+      }),
+    );
+  }
+
 }
