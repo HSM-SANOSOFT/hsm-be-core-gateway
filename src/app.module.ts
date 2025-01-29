@@ -16,6 +16,7 @@ import { PacientesModule } from './pacientes/pacientes.module';
 import { PersonalModule } from './personal/personal.module';
 import { UsersModule } from './users/users.module';
 import { WebsocketModule } from './websocket/websocket.module';
+import { PostulantesModule } from './postulantes/postulantes.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { WebsocketModule } from './websocket/websocket.module';
     UsersModule,
     WebsocketModule,
     CommonModule,
+    PostulantesModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthTokenGuard }],
