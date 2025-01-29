@@ -7,7 +7,7 @@ import * as oracledb from 'oracledb';
 @Injectable()
 export class DatabaseService {
   constructor(
-    @Inject('ORACLE_CONNECTION') private readonly connection: Connection,
+    @Inject('DATABASE_CONNECTION') private readonly connection: Connection,
   ) {}
 
   private readonly logger = new Logger('GATEWAY AUTH DATABASE');
