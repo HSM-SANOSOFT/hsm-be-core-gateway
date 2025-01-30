@@ -1,7 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs } from 'config';
-import * as ms from 'config/services';
 
 import { PersonalController } from './personal.controller';
 
@@ -11,7 +10,7 @@ import { PersonalController } from './personal.controller';
   imports: [
     ClientsModule.register([
       {
-        name: ms.PERSONAL_SERVICE,
+        name: envs.PERSONAL_MICROSERVICE_NAME,
         transport: Transport.TCP,
         options: {
           host: envs.PERSONAL_MICROSERVICE_HOST,
@@ -23,7 +22,7 @@ import { PersonalController } from './personal.controller';
 })
 export class PersonalModule {}
 
-const logger = new Logger(`${ms.PERSONAL_SERVICE}`);
+const logger = new Logger(`${envs.PERSONAL_MICROSERVICE_NAME}`);
 logger.log(
-  `Gateway is listening to ${ms.PERSONAL_SERVICE} on port ${envs.PERSONAL_MICROSERVICE_PORT}`,
+  `Gateway is listening to ${envs.PERSONAL_MICROSERVICE_NAME} on port ${envs.PERSONAL_MICROSERVICE_PORT}`,
 );

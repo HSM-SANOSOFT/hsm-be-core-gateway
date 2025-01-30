@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs } from 'config';
-import * as ms from 'config/services';
 
 import { JwtStrategy } from '../../guards/strategies/auth.strategy';
 import { AuthController } from './auth.controller';
@@ -18,7 +17,7 @@ import { DatabaseModule } from './database/database.module';
     }),
     ClientsModule.register([
       {
-        name: ms.AUTH_SERVICE,
+        name: envs.AUTH_MICROSERVICE_NAME,
         transport: Transport.TCP,
         options: {
           host: envs.AUTH_MICROSERVICE_HOST,
@@ -34,7 +33,7 @@ import { DatabaseModule } from './database/database.module';
 })
 export class AuthModule {}
 
-const logger = new Logger(`${ms.AUTH_SERVICE}`);
+const logger = new Logger(`${envs.AUTH_MICROSERVICE_NAME}`);
 logger.log(
-  `Gateway is listening to ${ms.AUTH_SERVICE} on port ${envs.AUTH_MICROSERVICE_PORT}`,
+  `Gateway is listening to ${envs.AUTH_MICROSERVICE_NAME} on port ${envs.AUTH_MICROSERVICE_PORT}`,
 );

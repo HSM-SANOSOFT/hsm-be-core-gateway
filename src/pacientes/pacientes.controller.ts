@@ -9,7 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import * as ms from 'config/services';
+import { envs } from 'config';
 import { catchError } from 'rxjs';
 
 import { AllPacienteDto } from './dto/allpaciente.dto';
@@ -18,7 +18,9 @@ import { TablePacientesDto } from './dto/tablepacientes.dto';
 
 @Controller('pacientes')
 export class PacientesController {
-  constructor(@Inject(ms.PACIENTES_SERVICE) private readonly client) {}
+  constructor(
+    @Inject(envs.PERSONAL_MICROSERVICE_NAME) private readonly client,
+  ) {}
 
   private readonly logger = new Logger(PacientesController.name);
 

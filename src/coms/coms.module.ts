@@ -1,7 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs } from 'config';
-import * as ms from 'config/services';
 
 import { ComsController } from './coms.controller';
 
@@ -11,7 +10,7 @@ import { ComsController } from './coms.controller';
   imports: [
     ClientsModule.register([
       {
-        name: ms.COMS_SERVICE,
+        name: envs.COMS_MICROSERVICE_NAME,
         transport: Transport.TCP,
         options: {
           host: envs.COMS_MICROSERVICE_HOST,
@@ -23,7 +22,7 @@ import { ComsController } from './coms.controller';
 })
 export class ComsModule {}
 
-const logger = new Logger(`${ms.COMS_SERVICE}`);
+const logger = new Logger(`${envs.COMS_MICROSERVICE_NAME}`);
 logger.log(
-  `Gateway is listening to ${ms.COMS_SERVICE} on port ${envs.COMS_MICROSERVICE_PORT}`,
+  `Gateway is listening to ${envs.COMS_MICROSERVICE_NAME} on port ${envs.COMS_MICROSERVICE_PORT}`,
 );

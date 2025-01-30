@@ -1,11 +1,13 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import * as ms from 'config/services';
+import { envs } from 'config';
 import { catchError } from 'rxjs';
 
 @Controller('examenes')
 export class ExamenesController {
-  constructor(@Inject(ms.EXAMENES_SERVICE) private readonly Client) {}
+  constructor(
+    @Inject(envs.EXAMENES_MICROSERVICE_NAME) private readonly Client,
+  ) {}
 
   @Get('init/co')
   InitCo() {

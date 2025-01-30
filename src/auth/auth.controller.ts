@@ -9,7 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import * as ms from 'config/services';
+import { envs } from 'config';
 import { Public } from 'decorators/public.decorator';
 import { catchError } from 'rxjs';
 
@@ -21,7 +21,9 @@ import { ValidateCodeDto } from './dto/validateCode.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(@Inject(ms.AUTH_SERVICE) private readonly client: ClientProxy) {}
+  constructor(
+    @Inject(envs.AUTH_MICROSERVICE_NAME) private readonly client: ClientProxy,
+  ) {}
 
   logger = new Logger('Gateway');
 

@@ -1,7 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs } from 'config';
-import * as ms from 'config/services';
 
 import { HospitalizacionController } from './hospitalizacion.controller';
 
@@ -11,7 +10,7 @@ import { HospitalizacionController } from './hospitalizacion.controller';
   imports: [
     ClientsModule.register([
       {
-        name: ms.HOSPITALIZACION_SERVICE,
+        name: envs.HOSPITALIZACION_MICROSERVICE_NAME,
         transport: Transport.TCP,
         options: {
           host: envs.HOSPITALIZACION_MICROSERVICE_HOST,
@@ -23,7 +22,7 @@ import { HospitalizacionController } from './hospitalizacion.controller';
 })
 export class HospitalizacionModule {}
 
-const logger = new Logger(`${ms.HOSPITALIZACION_SERVICE}`);
+const logger = new Logger(`${envs.HOSPITALIZACION_MICROSERVICE_NAME}`);
 logger.log(
-  `Gateway is listening to ${ms.HOSPITALIZACION_SERVICE} on port ${envs.HOSPITALIZACION_MICROSERVICE_PORT}`,
+  `Gateway is listening to ${envs.HOSPITALIZACION_MICROSERVICE_NAME} on port ${envs.HOSPITALIZACION_MICROSERVICE_PORT}`,
 );

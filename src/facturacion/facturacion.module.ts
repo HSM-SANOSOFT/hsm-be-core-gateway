@@ -1,7 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs } from 'config';
-import * as ms from 'config/services';
 
 import { FacturacionController } from './facturacion.controller';
 
@@ -11,7 +10,7 @@ import { FacturacionController } from './facturacion.controller';
   imports: [
     ClientsModule.register([
       {
-        name: ms.FACTURACION_SERVICE,
+        name: envs.FACTURACION_MICROSERVICE_NAME,
         transport: Transport.TCP,
         options: {
           host: envs.FACTURACION_MICROSERVICE_HOST,
@@ -23,7 +22,7 @@ import { FacturacionController } from './facturacion.controller';
 })
 export class FacturacionModule {}
 
-const logger = new Logger(`${ms.FACTURACION_SERVICE}`);
+const logger = new Logger(`${envs.FACTURACION_MICROSERVICE_NAME}`);
 logger.log(
-  `Gateway is listening to ${ms.FACTURACION_SERVICE} on port ${envs.FACTURACION_MICROSERVICE_PORT}`,
+  `Gateway is listening to ${envs.FACTURACION_MICROSERVICE_NAME} on port ${envs.FACTURACION_MICROSERVICE_PORT}`,
 );

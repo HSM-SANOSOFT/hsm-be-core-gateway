@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Inject, Ip, Param, Post } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import * as ms from 'config/services';
+import { envs } from 'config';
 import { Public } from 'decorators/public.decorator';
 import { catchError } from 'rxjs';
 
@@ -12,7 +12,9 @@ import { ValidateCodeDto } from './dto/validateCode.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(@Inject(ms.USERS_SERVICE) private readonly Client: ClientProxy) {}
+  constructor(
+    @Inject(envs.USERS_MICROSERVICE_NAME) private readonly Client: ClientProxy,
+  ) {}
 
   @Get('init/co')
   InitCo() {

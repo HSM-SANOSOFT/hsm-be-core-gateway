@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Inject, Ip, Post } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import * as ms from 'config/services';
+import { envs } from 'config';
 import { Public } from 'decorators/public.decorator';
 import { catchError } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { PasswordChangeDto } from './dto/passwordchange.dto';
 
 @Controller('coms')
 export class ComsController {
-  constructor(@Inject(ms.COMS_SERVICE) private readonly Client) {}
+  constructor(@Inject(envs.COMS_MICROSERVICE_NAME) private readonly Client) {}
 
   @Get('init/co')
   InitCo() {
