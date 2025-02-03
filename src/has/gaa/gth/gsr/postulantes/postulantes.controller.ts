@@ -6,14 +6,14 @@ import { envs } from 'config';
 export class PostulantesController {
     @Inject(envs.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME) private client: ClientProxy;
 
-    @Get(':CI')
-    findOneCedula(@Param('CI') CI: string) {
-        return this.client.send('findOneCI', { CI });
+    @Get('/getPostulanteId/:CI')
+    findOnePostulanteId(@Param('CI') CI: string) {
+        return this.client.send('getPostulanteId', {});
     }
 
-    @Get(':id')
-    findOneId(): string {
-        return 'un postulante';
+    @Get('/getPostulante/:id')
+    findOnePostulante(@Param('id') id: string) {
+        return this.client.send('getPostulante', { id });
     }
 
 
