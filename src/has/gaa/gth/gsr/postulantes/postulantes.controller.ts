@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { envs } from 'config';
 import { catchError } from 'rxjs';
@@ -7,9 +7,9 @@ import { catchError } from 'rxjs';
 export class PostulantesController {
     @Inject(envs.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME) private client: ClientProxy;
 
-    @Get('/getPostulanteId/:CI')
-    findOnePostulanteId(@Param('CI') CI: string) {
-        return this.client.send('getPostulanteId', {}).pipe(
+    @Get('/getPostulanteId/:tipoDocumento/:numeroDocumento')
+    getPostulanteId(@Param('tipoDocumento') tipoDocumento: string, @Param('numeroDocumento') numeroDocumento: string,) {
+        return this.client.send('getPostulanteId', { tipoDocumento, numeroDocumento }).pipe(
             catchError(err => {
                 throw new RpcException(err);
             }),
@@ -17,8 +17,17 @@ export class PostulantesController {
     }
 
     @Get('/getPostulante/:id')
-    findOnePostulante(@Param('id') id: string) {
+    getPostulante(@Param('id', ParseIntPipe) id: number) {
         return this.client.send('getPostulante', { id }).pipe(
+            catchError(err => {
+                throw new RpcException(err);
+            }),
+        );;
+    }
+
+    @Post('/createPostulante')
+    createPostulante(@Body() data: any) {
+        return this.client.send('createPostulante', data).pipe(
             catchError(err => {
                 throw new RpcException(err);
             }),
