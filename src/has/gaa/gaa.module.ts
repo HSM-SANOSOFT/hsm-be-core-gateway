@@ -4,4 +4,4 @@ import { GthModule } from './gth/gth.module';
 @Module({
   imports: [GthModule]
 })
-export class GaaModule {}
+export class GaaModule { }

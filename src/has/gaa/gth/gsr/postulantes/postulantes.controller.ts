@@ -1,10 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
 
-@Controller('postulantes')
+@Controller()
 export class PostulantesController {
 
     @Get()
-    findAll(): string {
-        return 'This action returns all postulantes';
+    init(): string {
+        return 'postulantes';
     }
 }

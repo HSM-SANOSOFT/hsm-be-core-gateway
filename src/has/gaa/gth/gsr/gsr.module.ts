@@ -3,6 +3,6 @@ import { TrabajosModule } from './trabajos/trabajos.module';
 import { PostulantesModule } from './postulantes/postulantes.module';
 
 @Module({
-  imports: [TrabajosModule, PostulantesModule]
+  imports: [TrabajosModule, PostulantesModule],
 })
-export class GsrModule {}
+export class GsrModule { }

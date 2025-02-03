@@ -4,4 +4,4 @@ import { GsrModule } from './gsr/gsr.module';
 @Module({
   imports: [GsrModule]
 })
-export class GthModule {}
+export class GthModule { }
