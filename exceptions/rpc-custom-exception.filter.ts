@@ -10,17 +10,24 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
     const rcpError = exception.getError();
 
     // Recursive function to extract validation errors with full property path
-    function extractValidationMessages(errors: any[], parentPath = ''): string[] {
-      return errors.flatMap((err) => {
-        const propertyPath = parentPath ? `${parentPath}.${err.property}` : err.property;
+    function extractValidationMessages(
+      errors: any[],
+      parentPath = '',
+    ): string[] {
+      return errors.flatMap(err => {
+        const propertyPath = parentPath
+          ? `${parentPath}.${err.property}`
+          : err.property;
 
         const messages = Object.values(err.constraints || {}).map(
-          (message) => `${propertyPath}: ${message}`
+          message => `${propertyPath}: ${message}`,
         );
 
         return [
           ...messages,
-          ...(err.children ? extractValidationMessages(err.children, propertyPath) : []),
+          ...(err.children
+            ? extractValidationMessages(err.children, propertyPath)
+            : []),
         ];
       });
     }
@@ -28,11 +35,10 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
     if (Array.isArray(rcpError)) {
       // Extract validation messages recursively with full property path
       const validationMessages = extractValidationMessages(rcpError);
-
       response.status(400).json({
-        message: validationMessages.length ? validationMessages : ['Validation failed'],
-        error: 'Bad Request',
-        statusCode: 400,
+        message: validationMessages.length
+          ? validationMessages
+          : ['Validation failed'],
       });
     } else if (
       typeof rcpError === 'object' &&
@@ -42,16 +48,12 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
       // Handle general RpcException errors
       const status = rcpError.status || 500;
       response.status(status).json({
-        statusCode: status,
         message: rcpError.message,
-        error: 'Error',
       });
     } else {
       // Fallback for unexpected errors
       response.status(500).json({
-        statusCode: 500,
         message: ['Internal server error'],
-        error: 'Internal Server Error',
       });
     }
   }

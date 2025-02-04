@@ -31,9 +31,9 @@ export class PostulantesController {
       );
   }
 
-  @Get('/:id')
-  getPostulante(@Param('id', ParseIntPipe) id: number) {
-    return this.client.send('getPostulante', { id }).pipe(
+  @Get('getPostulante/:ID')
+  getPostulante(@Param('ID', ParseIntPipe) ID: number) {
+    return this.client.send('getPostulante', { ID }).pipe(
       catchError(err => {
         throw new RpcException(err);
       }),
