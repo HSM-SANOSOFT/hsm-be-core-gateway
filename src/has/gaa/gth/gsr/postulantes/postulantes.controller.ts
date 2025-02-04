@@ -27,11 +27,12 @@ export class PostulantesController {
 
     @Post('/createPostulante')
     createPostulante(@Body() data: any) {
+        console.log(data);
         return this.client.send('createPostulante', data).pipe(
             catchError(err => {
                 throw new RpcException(err);
             }),
-        );;
+        )
     }
 
 

@@ -9,16 +9,28 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
 
     const rcpError = exception.getError();
 
-    // Check if the error is an array (DTO validation error)
-    if (Array.isArray(rcpError)) {
-      // Consolidate validation messages into a single array
-      const validationMessages = rcpError.flatMap(err =>
-        Object.values(err.constraints || {}),
-      );
+    // Recursive function to extract validation errors with full property path
+    function extractValidationMessages(errors: any[], parentPath = ''): string[] {
+      return errors.flatMap((err) => {
+        const propertyPath = parentPath ? `${parentPath}.${err.property}` : err.property;
 
-      // Respond with the desired structure
+        const messages = Object.values(err.constraints || {}).map(
+          (message) => `${propertyPath}: ${message}`
+        );
+
+        return [
+          ...messages,
+          ...(err.children ? extractValidationMessages(err.children, propertyPath) : []),
+        ];
+      });
+    }
+
+    if (Array.isArray(rcpError)) {
+      // Extract validation messages recursively with full property path
+      const validationMessages = extractValidationMessages(rcpError);
+
       response.status(400).json({
-        message: validationMessages,
+        message: validationMessages.length ? validationMessages : ['Validation failed'],
         error: 'Bad Request',
         statusCode: 400,
       });
@@ -28,14 +40,14 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
       'message' in rcpError
     ) {
       // Handle general RpcException errors
-      const status = rcpError.status || 500; // Default to 500 if status is not provided
+      const status = rcpError.status || 500;
       response.status(status).json({
         statusCode: status,
         message: rcpError.message,
         error: 'Error',
       });
     } else {
-      // Fallback for unexpected error formats
+      // Fallback for unexpected errors
       response.status(500).json({
         statusCode: 500,
         message: ['Internal server error'],
