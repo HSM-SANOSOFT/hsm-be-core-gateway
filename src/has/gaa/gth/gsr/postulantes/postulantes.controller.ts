@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
   Body,
   Controller,
@@ -5,6 +6,7 @@ import {
   Inject,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
@@ -29,7 +31,7 @@ export class PostulantesController {
       );
   }
 
-  @Get('/getPostulante/:id')
+  @Get('/:id')
   getPostulante(@Param('id', ParseIntPipe) id: number) {
     return this.client.send('getPostulante', { id }).pipe(
       catchError(err => {
@@ -39,8 +41,17 @@ export class PostulantesController {
   }
 
   @Post('/createPostulante')
-  createPostulante(@Body() data: any) {
+  createPostulante(@Body() data: object) {
     return this.client.send('createPostulante', data).pipe(
+      catchError(err => {
+        throw new RpcException(err);
+      }),
+    );
+  }
+
+  @Patch('/updatePostulante')
+  updatePostulante(@Body() data: object) {
+    return this.client.send('updatePostulante', data).pipe(
       catchError(err => {
         throw new RpcException(err);
       }),
