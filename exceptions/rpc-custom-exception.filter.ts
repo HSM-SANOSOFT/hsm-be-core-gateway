@@ -1,4 +1,4 @@
-import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, Logger } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 
 @Catch(RpcException)
@@ -6,10 +6,10 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
   catch(exception: RpcException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
-
     const rcpError = exception.getError();
 
-    // Recursive function to extract validation errors with full property path
+    Logger.error(rcpError);
+
     function extractValidationMessages(
       errors: any[],
       parentPath = '',
@@ -18,7 +18,6 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
         const propertyPath = parentPath
           ? `${parentPath}.${err.property}`
           : err.property;
-
         const messages = Object.values(err.constraints || {}).map(
           message => `${propertyPath}: ${message}`,
         );
@@ -33,9 +32,9 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
     }
 
     if (Array.isArray(rcpError)) {
-      // Extract validation messages recursively with full property path
       const validationMessages = extractValidationMessages(rcpError);
       response.status(400).json({
+        status: 400,
         message: validationMessages.length
           ? validationMessages
           : ['Validation failed'],
@@ -45,14 +44,15 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
       'status' in rcpError &&
       'message' in rcpError
     ) {
-      // Handle general RpcException errors
-      const status = rcpError.status || 500;
+      const { status, ...errorDetails } = rcpError; // Keep `status` dynamic
+
       response.status(status).json({
-        message: rcpError.message,
+        status,
+        ...errorDetails, // Include all other fields (message, data, errorData, etc.)
       });
     } else {
-      // Fallback for unexpected errors
       response.status(500).json({
+        status: 500,
         message: ['Internal server error'],
       });
     }
