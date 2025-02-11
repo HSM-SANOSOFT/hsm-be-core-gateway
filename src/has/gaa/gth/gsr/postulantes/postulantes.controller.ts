@@ -2,6 +2,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -53,6 +54,14 @@ export class PostulantesController {
   updatePostulante(@Param('ID', ParseIntPipe) ID: number, @Body() data: any) {
     data.ID = ID;
     return this.client.send('updatePostulante', data).pipe(
+      catchError(err => {
+        throw new RpcException(err);
+      }),
+    );
+  }
+  @Delete(':ID')
+  deletePostulante(@Param('ID', ParseIntPipe) ID: number) {
+    return this.client.send('deletePostulante', { ID }).pipe(
       catchError(err => {
         throw new RpcException(err);
       }),
