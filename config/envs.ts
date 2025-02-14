@@ -44,7 +44,9 @@ interface EnvVars {
   HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST: string;
   HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT: number;
 
-
+  HSM_BE_CORE_DOCS_NAME: string;
+  HSM_BE_CORE_DOCS_HOST: string;
+  HSM_BE_CORE_DOCS_PORT: number;
 }
 
 const envsSchema = joi
@@ -80,6 +82,10 @@ const envsSchema = joi
     HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME: joi.string().required(),
     HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST: joi.string().default('localhost'),
     HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT: joi.number().required(),
+
+    HSM_BE_CORE_DOCS_NAME: joi.string().required(),
+    HSM_BE_CORE_DOCS_HOST: joi.string().default('localhost'),
+    HSM_BE_CORE_DOCS_PORT: joi.number().required(),
 
   })
   .unknown()
@@ -125,4 +131,8 @@ export const envs = {
   HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME: envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME,
   HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST: envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST,
   HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT: envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT,
+
+  HSM_BE_CORE_DOCS_NAME: envVars.HSM_BE_CORE_DOCS_NAME,
+  HSM_BE_CORE_DOCS_HOST: envVars.HSM_BE_CORE_DOCS_HOST,
+  HSM_BE_CORE_DOCS_PORT: envVars.HSM_BE_CORE_DOCS_PORT,
 };
