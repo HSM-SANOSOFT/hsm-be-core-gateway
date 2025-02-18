@@ -17,7 +17,6 @@ export class DocumentosController {
     @Inject(envs.HSM_BE_CORE_DOCS_NAME)
     private client: ClientProxy;
 
-
     @Post('/docs/gsr/guardar')
     @UseInterceptors(
         FileInterceptor('file', {
@@ -25,22 +24,28 @@ export class DocumentosController {
         }),
     )
     guardarGSRDocumentosRecibidos(
-        @Body() data: object,
-        @UploadedFile() file: Express.Multer.File,
+        @Body() data: any,
+        @UploadedFile() file?: Express.Multer.File,
     ) {
+
+        let parsedData;
+        try {
+            const jsonString =
+                typeof data?.body === 'string'
+                    ? data.body.replace(/\\/g, '/')
+                    : data.body;
+            parsedData = JSON.parse(jsonString);
+        } catch (error) {
+            throw new RpcException(`Error al parsear JSON: ${error.message}`);
+        }
+
         const payload = {
-            data,
-            file: {
-                originalname: file.originalname,
-                filename: file.originalname, // Use original name since we're not saving it
-                size: file.size,
-                mimetype: file.mimetype,
-                buffer: file.buffer,
-            },
+            GSR_DOCUMENTOS: parsedData,
+            file: file,
         };
 
         return this.client.send('guardarGSRDocumentosRecibidos', payload).pipe(
-            catchError((err) => {
+            catchError(err => {
                 throw new RpcException(err);
             }),
         );
