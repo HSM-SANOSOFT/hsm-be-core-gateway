@@ -12,12 +12,12 @@ import { envs } from 'config';
 import { memoryStorage } from 'multer';
 import { catchError } from 'rxjs';
 
-@Controller('Documentos')
+@Controller('docs')
 export class DocumentosController {
     @Inject(envs.HSM_BE_CORE_DOCS_NAME)
     private client: ClientProxy;
 
-    @Post('/docs/gsr/guardar')
+    @Post('/gsr/guardar')
     @UseInterceptors(
         FileInterceptor('file', {
             storage: memoryStorage(),
