@@ -17,6 +17,6 @@ async function bootstrap() {
   );
   app.useGlobalFilters(new RcpCustomExceptionFilter());
   await app.listen(envs.HSM_BE_CORE_GATEWAY_PORT);
-  logger.log(`Gateway is active on port ${envs.HSM_BE_CORE_GATEWAY_PORT}`);
+  logger.log(`Gateway is active on port: ${envs.HSM_BE_CORE_GATEWAY_PORT}`);
 }
 void bootstrap();
