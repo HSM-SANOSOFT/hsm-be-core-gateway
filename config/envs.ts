@@ -4,11 +4,14 @@ import * as dotenv from 'dotenv';
 import * as joi from 'joi';
 import * as path from 'path';
 
+const pathGlobal = '../../../HSM-KUBERNETES/.env';
 dotenv.config({
-  path: path.resolve(__dirname, '../../../kubernetes/envs/global.env'),
+  path: path.resolve(__dirname, pathGlobal),
 });
+
+const pathSpecific = '../../../HSM-KUBERNETES/envs/hsm-be-core-gateway.env';
 dotenv.config({
-  path: path.resolve(__dirname, '../../../kubernetes/envs/gateway.env'),
+  path: path.resolve(__dirname, pathSpecific),
 });
 
 interface EnvVars {
@@ -86,18 +89,17 @@ const envsSchema = joi
     HSM_BE_CORE_DOCS_NAME: joi.string().required(),
     HSM_BE_CORE_DOCS_HOST: joi.string().default('localhost'),
     HSM_BE_CORE_DOCS_PORT: joi.number().required(),
-
   })
   .unknown()
   .required();
 
-const { error, value } = envsSchema.validate(process.env);
+const validationSchema = envsSchema.validate(process.env);
 
-if (error) {
-  throw new Error(`Config validation error: ${error.message}`);
+if (validationSchema.error) {
+  throw new Error(`Config validation error: ${validationSchema.error.message}`);
 }
 
-const envVars: EnvVars = value;
+const envVars: EnvVars = validationSchema.value as EnvVars;
 
 export const envs = {
   ENVIRONMENT: envVars.ENVIRONMENT,
@@ -124,13 +126,19 @@ export const envs = {
   HSM_BE_CORE_COMMON_HOST: envVars.HSM_BE_CORE_COMMON_HOST,
   HSM_BE_CORE_COMMON_PORT: envVars.HSM_BE_CORE_COMMON_PORT,
 
-  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME: envVars.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME,
-  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST: envVars.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST,
-  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT: envVars.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT,
+  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME:
+    envVars.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME,
+  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST:
+    envVars.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST,
+  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT:
+    envVars.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT,
 
-  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME: envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME,
-  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST: envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST,
-  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT: envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT,
+  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME:
+    envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME,
+  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST:
+    envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST,
+  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT:
+    envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT,
 
   HSM_BE_CORE_DOCS_NAME: envVars.HSM_BE_CORE_DOCS_NAME,
   HSM_BE_CORE_DOCS_HOST: envVars.HSM_BE_CORE_DOCS_HOST,
