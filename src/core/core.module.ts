@@ -6,8 +6,13 @@ import { ComsModule } from './coms/coms.module';
 import { DocumentosModule } from './docs/docs.module';
 import { UsersModule } from './users/users.module';
 
-
 @Module({
-  imports: [AuthModule, UsersModule, ComsModule, CommonModule, DocumentosModule],
+  imports: [
+    AuthModule,
+    UsersModule,
+    ComsModule,
+    CommonModule,
+    DocumentosModule,
+  ],
 })
-export class CoreModule { }
+export class CoreModule {}

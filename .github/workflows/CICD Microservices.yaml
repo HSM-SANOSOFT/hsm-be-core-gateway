@@ -57,6 +57,9 @@ jobs:
 
       - name: Pull and Deploy Microservices
         run: |
+          echo "Navigating to directory: ${{secrets.PATH_DOCKER_COMPOSE}}"
+          cd ${{secrets.PATH_DOCKER_COMPOSE}}
+          
           echo "Pulling the latest image for ${{vars.MICROSERVICE_NAME}}..."
           echo "docker pull ghcr.io/hsm-sanosoft/${{vars.MICROSERVICE_NAME}}:latest"
           docker pull ghcr.io/hsm-sanosoft/${{vars.MICROSERVICE_NAME}}:latest
