@@ -37,7 +37,7 @@ export class ComsController {
     };
     return this.client.send('sendEmail', payload).pipe(
       catchError(err => {
-        throw new RpcException(err);
+        throw new RpcException(err as object);
       }),
     );
   }
@@ -46,7 +46,7 @@ export class ComsController {
   resendEmail(@Param('id') id: string) {
     return this.client.send('resendEmail', id).pipe(
       catchError(err => {
-        throw new RpcException(err);
+        throw new RpcException(err as object);
       }),
     );
   }
