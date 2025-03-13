@@ -59,35 +59,35 @@ const envsSchema = joi
     JWT_SECRET: joi.string().default('sanosoft'),
 
     HSM_BE_CORE_GATEWAY_NAME: joi.string().required(),
-    HSM_BE_CORE_GATEWAY_HOST: joi.string().default('localhost'),
+    HSM_BE_CORE_GATEWAY_HOST: joi.string().required(),
     HSM_BE_CORE_GATEWAY_PORT: joi.number().required(),
 
     HSM_BE_CORE_AUTH_NAME: joi.string().required(),
-    HSM_BE_CORE_AUTH_HOST: joi.string().default('localhost'),
+    HSM_BE_CORE_AUTH_HOST: joi.string().required(),
     HSM_BE_CORE_AUTH_PORT: joi.number().required(),
 
     HSM_BE_CORE_COMS_NAME: joi.string().required(),
-    HSM_BE_CORE_COMS_HOST: joi.string().default('localhost'),
+    HSM_BE_CORE_COMS_HOST: joi.string().required(),
     HSM_BE_CORE_COMS_PORT: joi.number().required(),
 
     HSM_BE_CORE_USERS_NAME: joi.string().required(),
-    HSM_BE_CORE_USERS_HOST: joi.string().default('localhost'),
+    HSM_BE_CORE_USERS_HOST: joi.string().required(),
     HSM_BE_CORE_USERS_PORT: joi.number().required(),
 
     HSM_BE_CORE_COMMON_NAME: joi.string().required(),
-    HSM_BE_CORE_COMMON_HOST: joi.string().default('localhost'),
+    HSM_BE_CORE_COMMON_HOST: joi.string().required(),
     HSM_BE_CORE_COMMON_PORT: joi.number().required(),
 
     HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME: joi.string().required(),
-    HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST: joi.string().default('localhost'),
+    HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST: joi.string().required(),
     HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT: joi.number().required(),
 
     HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME: joi.string().required(),
-    HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST: joi.string().default('localhost'),
+    HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST: joi.string().required(),
     HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT: joi.number().required(),
 
     HSM_BE_CORE_DOCS_NAME: joi.string().required(),
-    HSM_BE_CORE_DOCS_HOST: joi.string().default('localhost'),
+    HSM_BE_CORE_DOCS_HOST: joi.string().required(),
     HSM_BE_CORE_DOCS_PORT: joi.number().required(),
   })
   .unknown()
