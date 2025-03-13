@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgumentsHost, Catch, ExceptionFilter, Logger } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import { Response } from 'express';
 
 @Catch(RpcException)
 export class RcpCustomExceptionFilter implements ExceptionFilter {
   catch(exception: RpcException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse();
+    const response = ctx.getResponse<Response>();
     const rcpError = exception.getError();
 
     Logger.error(rcpError);
@@ -16,11 +20,11 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
     ): string[] {
       return errors.flatMap(err => {
         const propertyPath = parentPath
-          ? `${parentPath}.${err.property}`
-          : err.property;
-        const messages = Object.values(err.constraints || {}).map(
-          message => `${propertyPath}: ${message}`,
-        );
+          ? `${parentPath}.${(err as { property: string }).property}`
+          : (err as { property: string }).property;
+        const messages = Object.values(
+          (err as { constraints: { [key: string]: string } }).constraints || {},
+        ).map(message => `${propertyPath}: ${message}`);
 
         return [
           ...messages,
@@ -34,7 +38,6 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
     if (Array.isArray(rcpError)) {
       const validationMessages = extractValidationMessages(rcpError);
       response.status(400).json({
-        status: 400,
         message: validationMessages.length
           ? validationMessages
           : ['Validation failed'],
@@ -44,15 +47,13 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
       'status' in rcpError &&
       'message' in rcpError
     ) {
-      const { status, ...errorDetails } = rcpError; // Keep `status` dynamic
+      const { status, ...errorDetails } = rcpError;
 
-      response.status(status).json({
-        status,
-        ...errorDetails, // Include all other fields (message, data, errorData, etc.)
+      response.status(Number(status)).json({
+        ...errorDetails,
       });
     } else {
       response.status(500).json({
-        status: 500,
         message: ['Internal server error'],
       });
     }

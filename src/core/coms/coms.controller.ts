@@ -5,6 +5,7 @@ import {
   Inject,
   Param,
   Post,
+  Req,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -18,18 +19,41 @@ import { TemplateDto } from './dto/templateDto';
 
 @Controller('coms')
 export class ComsController {
-  @Inject(envs.HSM_BE_CORE_COMS_NAME) private client: ClientProxy;
+  constructor(
+    @Inject(envs.HSM_BE_CORE_COMS_NAME) private client: ClientProxy,
+  ) {}
 
-  @Post('sendEmail')
+  @Post('email/send')
   @UseInterceptors(FilesInterceptor('files'))
   sendEmail(
-    @Body('data') datas: string,
-    @UploadedFiles() files: Express.Multer.File[],
+    @Req() req: Request,
+    @Body('data')
+    datas:
+      | string
+      | {
+          email: string;
+          template: TemplateDto;
+        },
+    @UploadedFiles() files?: Express.Multer.File[],
   ) {
-    const data = JSON.parse(datas) as {
+    let data: {
       email: string;
       template: TemplateDto;
     };
+    if (
+      (req.headers['content-type'] as string)?.includes('multipart/form-data')
+    ) {
+      data = JSON.parse(datas as string) as {
+        email: string;
+        template: TemplateDto;
+      };
+    } else {
+      data = datas as {
+        email: string;
+        template: TemplateDto;
+      };
+      files = [];
+    }
 
     const payload = {
       data,
@@ -37,17 +61,34 @@ export class ComsController {
     };
     return this.client.send('sendEmail', payload).pipe(
       catchError(err => {
-        throw new RpcException(err);
+        throw new RpcException(err as object);
       }),
     );
   }
 
-  @Get('reenviar/:id')
+  @Get('email/resend/:id')
   resendEmail(@Param('id') id: string) {
     return this.client.send('resendEmail', id).pipe(
       catchError(err => {
-        throw new RpcException(err);
+        throw new RpcException(err as object);
       }),
     );
+  }
+
+  @Post('sms/send')
+  sendSms(
+    @Body('telefono') telefono: string,
+    @Body('templateData') templateData: object,
+    @Body('templateName') templateName: string,
+    @Body('modulo') modulo: string,
+    @Body('cedula') cedula: string,
+  ) {
+    return this.client
+      .send('sendSms', { telefono, templateData, templateName, modulo, cedula })
+      .pipe(
+        catchError(err => {
+          throw new RpcException(err as object);
+        }),
+      );
   }
 }
