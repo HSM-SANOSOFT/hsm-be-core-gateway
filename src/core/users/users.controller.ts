@@ -60,9 +60,7 @@ export class UsersController {
       .send('updateUserLOPD', { CEDULA, STATUS, TIPO_ENVIO })
       .pipe(
         catchError(err => {
-          throw new RpcException(
-            typeof err === 'string' ? err : JSON.stringify(err),
-          );
+          throw new RpcException(err as object);
         }),
       );
   }

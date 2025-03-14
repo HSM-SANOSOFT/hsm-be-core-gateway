@@ -32,6 +32,7 @@ export class AuthController {
     @Param('idDocs') idDocs: string,
     @Body('TIPO') TIPO: string,
     @Body('NUMERO_ENVIADO') NUMERO_ENVIADO: number,
+    @Body('NUMERO_RECIBIDO') NUMERO_RECIBIDO: number,
     @Req() request: Request,
   ) {
     let ip = request.headers['x-forwarded-for'] || request.ip;
@@ -42,7 +43,7 @@ export class AuthController {
       .send('pinValidation', {
         idDocs,
         TIPO,
-        NUMERO_ENVIADO,
+        NUMERO_RECIBIDO,
         ip,
       })
       .pipe(
