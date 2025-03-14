@@ -9,11 +9,10 @@ import { ComsController } from './coms.controller';
   imports: [
     ClientsModule.register([
       {
-        name: envs.HSM_BE_CORE_COMS_NAME,
+        name: envs.hsm_be_core_coms,
         transport: Transport.TCP,
         options: {
-          host: envs.HSM_BE_CORE_COMS_HOST,
-          port: envs.HSM_BE_CORE_COMS_PORT,
+          host: envs.hsm_be_core_coms,
         },
       },
     ]),

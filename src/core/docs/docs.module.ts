@@ -8,11 +8,10 @@ import { DocumentosController } from './docs.controller';
   imports: [
     ClientsModule.register([
       {
-        name: envs.HSM_BE_CORE_DOCS_NAME,
+        name: envs.hsm_be_core_docs,
         transport: Transport.TCP,
         options: {
-          host: envs.HSM_BE_CORE_DOCS_HOST,
-          port: envs.HSM_BE_CORE_DOCS_PORT,
+          host: envs.hsm_be_core_docs,
         },
       },
     ]),

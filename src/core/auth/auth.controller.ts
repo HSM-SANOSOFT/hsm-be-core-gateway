@@ -6,9 +6,7 @@ import { catchError } from 'rxjs';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    @Inject(envs.HSM_BE_CORE_AUTH_NAME) private client: ClientProxy,
-  ) {}
+  constructor(@Inject(envs.hsm_be_core_auth) private client: ClientProxy) {}
 
   @Post('pin/generation/:idDocs')
   pinGeneration(

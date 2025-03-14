@@ -1,10 +1,10 @@
 import {
-    Body,
-    Controller,
-    Inject,
-    Post,
-    UploadedFile,
-    UseInterceptors,
+  Body,
+  Controller,
+  Inject,
+  Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -14,10 +14,9 @@ import { catchError } from 'rxjs';
 
 @Controller('docs')
 export class DocumentosController {
+  @Inject(envs.hsm_be_core_docs)
+  private client: ClientProxy;
   /*
-    @Inject(envs.HSM_BE_CORE_DOCS_NAME)
-    private client: ClientProxy;
-
     @Post('/gsr/guardar')
     @UseInterceptors(
         FileInterceptor('file', {

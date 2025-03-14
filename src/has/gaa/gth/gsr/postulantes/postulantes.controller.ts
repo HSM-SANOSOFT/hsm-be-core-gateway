@@ -16,7 +16,7 @@ import { catchError } from 'rxjs';
 
 @Controller('postulantes')
 export class PostulantesController {
-  @Inject(envs.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME)
+  @Inject(envs.hsm_be_has_gaa_gth_gsr_postulantes)
   private client: ClientProxy;
   @Get('/getPostulanteId/:tipoDocumento/:numeroDocumento')
   getPostulanteId(

@@ -13,9 +13,7 @@ import { catchError } from 'rxjs';
 
 @Controller('users')
 export class UsersController {
-  constructor(
-    @Inject(envs.HSM_BE_CORE_USERS_NAME) private client: ClientProxy,
-  ) {}
+  constructor(@Inject(envs.hsm_be_core_users) private client: ClientProxy) {}
 
   @Get(':IdDocs')
   getUser(@Param('IdDocs') IdDocs: string) {

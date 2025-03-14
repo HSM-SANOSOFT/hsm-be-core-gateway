@@ -9,11 +9,10 @@ import { PostulantesController } from './postulantes.controller';
   imports: [
     ClientsModule.register([
       {
-        name: envs.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME,
+        name: envs.hsm_be_has_gaa_gth_gsr_postulantes,
         transport: Transport.TCP,
         options: {
-          host: envs.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST,
-          port: envs.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT,
+          host: envs.hsm_be_has_gaa_gth_gsr_postulantes,
         },
       },
     ]),

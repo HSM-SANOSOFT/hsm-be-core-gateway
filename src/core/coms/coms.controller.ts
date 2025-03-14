@@ -19,9 +19,7 @@ import { TemplateDto } from './dto/templateDto';
 
 @Controller('coms')
 export class ComsController {
-  constructor(
-    @Inject(envs.HSM_BE_CORE_COMS_NAME) private client: ClientProxy,
-  ) {}
+  constructor(@Inject(envs.hsm_be_core_coms) private client: ClientProxy) {}
 
   @Post('email/send')
   @UseInterceptors(FilesInterceptor('files'))
