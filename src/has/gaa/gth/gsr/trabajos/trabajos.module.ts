@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
-import { TrabajosController } from './trabajos.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs } from 'config';
 
+import { TrabajosController } from './trabajos.controller';
+
 @Module({
   controllers: [TrabajosController],
-  imports: [ClientsModule.register([
-    {
-      name: envs.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME,
-      transport: Transport.TCP,
-      options: {
-        host: envs.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST,
-        port: envs.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT
-      }
-    }
-  ])],
+  imports: [
+    ClientsModule.register([
+      {
+        name: envs.hsm_be_has_gaa_gth_gsr_trabajos,
+        transport: Transport.TCP,
+        options: {
+          host: envs.hsm_be_has_gaa_gth_gsr_trabajos,
+        },
+      },
+    ]),
+  ],
 })
-export class TrabajosModule { }
+export class TrabajosModule {}

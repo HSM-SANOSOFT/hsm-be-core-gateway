@@ -9,11 +9,10 @@ import { AuthController } from './auth.controller';
   imports: [
     ClientsModule.register([
       {
-        name: envs.HSM_BE_CORE_AUTH_NAME,
+        name: envs.hsm_be_core_auth,
         transport: Transport.TCP,
         options: {
-          host: envs.HSM_BE_CORE_AUTH_HOST,
-          port: envs.HSM_BE_CORE_AUTH_PORT,
+          host: envs.hsm_be_core_auth,
         },
       },
     ]),

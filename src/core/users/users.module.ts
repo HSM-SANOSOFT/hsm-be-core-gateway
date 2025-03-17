@@ -9,11 +9,10 @@ import { UsersController } from './users.controller';
   imports: [
     ClientsModule.register([
       {
-        name: envs.HSM_BE_CORE_USERS_NAME,
+        name: envs.hsm_be_core_users,
         transport: Transport.TCP,
         options: {
-          host: envs.HSM_BE_CORE_USERS_HOST,
-          port: envs.HSM_BE_CORE_USERS_PORT,
+          host: envs.hsm_be_core_users,
         },
       },
     ]),

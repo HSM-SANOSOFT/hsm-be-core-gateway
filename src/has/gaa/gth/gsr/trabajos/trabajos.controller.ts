@@ -4,7 +4,7 @@ import { envs } from 'config';
 
 @Controller('trabajos')
 export class TrabajosController {
-  @Inject(envs.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME)
+  @Inject(envs.hsm_be_has_gaa_gth_gsr_trabajos)
   private client: ClientProxy;
 
   @Get()

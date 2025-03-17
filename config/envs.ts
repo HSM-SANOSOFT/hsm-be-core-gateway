@@ -1,146 +1,63 @@
 import 'dotenv/config';
 
-import * as dotenv from 'dotenv';
 import * as joi from 'joi';
-import * as path from 'path';
-
-const pathGlobal = '../../../HSM-KUBERNETES/.env';
-dotenv.config({
-  path: path.resolve(__dirname, pathGlobal),
-});
-
-const pathSpecific = '../../../HSM-KUBERNETES/envs/hsm-be-core-gateway.env';
-dotenv.config({
-  path: path.resolve(__dirname, pathSpecific),
-});
 
 interface EnvVars {
   ENVIRONMENT: string;
-
   JWT_SECRET: string;
 
-  HSM_BE_CORE_GATEWAY_NAME: string;
-  HSM_BE_CORE_GATEWAY_HOST: string;
-  HSM_BE_CORE_GATEWAY_PORT: number;
+  hsm_be_core_gateway: string;
+  hsm_be_core_gateway_port: number;
 
-  HSM_BE_CORE_AUTH_NAME: string;
-  HSM_BE_CORE_AUTH_HOST: string;
-  HSM_BE_CORE_AUTH_PORT: number;
-
-  HSM_BE_CORE_COMS_NAME: string;
-  HSM_BE_CORE_COMS_HOST: string;
-  HSM_BE_CORE_COMS_PORT: number;
-
-  HSM_BE_CORE_USERS_NAME: string;
-  HSM_BE_CORE_USERS_HOST: string;
-  HSM_BE_CORE_USERS_PORT: number;
-
-  HSM_BE_CORE_COMMON_NAME: string;
-  HSM_BE_CORE_COMMON_HOST: string;
-  HSM_BE_CORE_COMMON_PORT: number;
-
-  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME: string;
-  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST: string;
-  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT: number;
-
-  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME: string;
-  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST: string;
-  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT: number;
-
-  HSM_BE_CORE_DOCS_NAME: string;
-  HSM_BE_CORE_DOCS_HOST: string;
-  HSM_BE_CORE_DOCS_PORT: number;
+  hsm_be_core_auth: string;
+  hsm_be_core_coms: string;
+  hsm_be_core_users: string;
+  hsm_be_core_common: string;
+  hsm_be_has_gaa_gth_gsr_postulantes: string;
+  hsm_be_has_gaa_gth_gsr_trabajos: string;
+  hsm_be_core_docs: string;
 }
 
-const envsSchema = joi
+const envSchema = joi
   .object({
     ENVIRONMENT: joi.string().required(),
-
     JWT_SECRET: joi.string().default('sanosoft'),
 
-    HSM_BE_CORE_GATEWAY_NAME: joi.string().required(),
-    HSM_BE_CORE_GATEWAY_HOST: joi.string().required(),
-    HSM_BE_CORE_GATEWAY_PORT: joi.number().required(),
+    hsm_be_core_gateway: joi.string().required(),
+    hsm_be_core_gateway_port: joi.number().default(41000),
 
-    HSM_BE_CORE_AUTH_NAME: joi.string().required(),
-    HSM_BE_CORE_AUTH_HOST: joi.string().required(),
-    HSM_BE_CORE_AUTH_PORT: joi.number().required(),
-
-    HSM_BE_CORE_COMS_NAME: joi.string().required(),
-    HSM_BE_CORE_COMS_HOST: joi.string().required(),
-    HSM_BE_CORE_COMS_PORT: joi.number().required(),
-
-    HSM_BE_CORE_USERS_NAME: joi.string().required(),
-    HSM_BE_CORE_USERS_HOST: joi.string().required(),
-    HSM_BE_CORE_USERS_PORT: joi.number().required(),
-
-    HSM_BE_CORE_COMMON_NAME: joi.string().required(),
-    HSM_BE_CORE_COMMON_HOST: joi.string().required(),
-    HSM_BE_CORE_COMMON_PORT: joi.number().required(),
-
-    HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME: joi.string().required(),
-    HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST: joi.string().required(),
-    HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT: joi.number().required(),
-
-    HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME: joi.string().required(),
-    HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST: joi.string().required(),
-    HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT: joi.number().required(),
-
-    HSM_BE_CORE_DOCS_NAME: joi.string().required(),
-    HSM_BE_CORE_DOCS_HOST: joi.string().required(),
-    HSM_BE_CORE_DOCS_PORT: joi.number().required(),
+    hsm_be_core_auth: joi.string().required(),
+    hsm_be_core_coms: joi.string().required(),
+    hsm_be_core_users: joi.string().required(),
+    hsm_be_core_common: joi.string().required(),
+    hsm_be_has_gaa_gth_gsr_postulantes: joi.string().required(),
+    hsm_be_has_gaa_gth_gsr_trabajos: joi.string().required(),
+    hsm_be_core_docs: joi.string().required(),
   })
   .unknown()
   .required();
 
-const validationSchema = envsSchema.validate(process.env);
+const validation = envSchema.validate(process.env);
 
-if (validationSchema.error) {
-  throw new Error(`Config validation error: ${validationSchema.error.message}`);
+if (validation.error) {
+  throw new Error(`Config validation error: ${validation.error.message}`);
 }
 
-const envVars: EnvVars = validationSchema.value as EnvVars;
+const envVars: EnvVars = validation.value as EnvVars;
 
 export const envs = {
   ENVIRONMENT: envVars.ENVIRONMENT,
-
   JWT_SECRET: envVars.JWT_SECRET,
 
-  HSM_BE_CORE_GATEWAY_NAME: envVars.HSM_BE_CORE_GATEWAY_NAME,
-  HSM_BE_CORE_GATEWAY_HOST: envVars.HSM_BE_CORE_GATEWAY_HOST,
-  HSM_BE_CORE_GATEWAY_PORT: envVars.HSM_BE_CORE_GATEWAY_PORT,
+  hsm_be_core_gateway: envVars.hsm_be_core_gateway,
+  hsm_be_core_gateway_port: envVars.hsm_be_core_gateway_port,
 
-  HSM_BE_CORE_AUTH_NAME: envVars.HSM_BE_CORE_AUTH_NAME,
-  HSM_BE_CORE_AUTH_HOST: envVars.HSM_BE_CORE_AUTH_HOST,
-  HSM_BE_CORE_AUTH_PORT: envVars.HSM_BE_CORE_AUTH_PORT,
-
-  HSM_BE_CORE_COMS_NAME: envVars.HSM_BE_CORE_COMS_NAME,
-  HSM_BE_CORE_COMS_HOST: envVars.HSM_BE_CORE_COMS_HOST,
-  HSM_BE_CORE_COMS_PORT: envVars.HSM_BE_CORE_COMS_PORT,
-
-  HSM_BE_CORE_USERS_NAME: envVars.HSM_BE_CORE_USERS_NAME,
-  HSM_BE_CORE_USERS_HOST: envVars.HSM_BE_CORE_USERS_HOST,
-  HSM_BE_CORE_USERS_PORT: envVars.HSM_BE_CORE_USERS_PORT,
-
-  HSM_BE_CORE_COMMON_NAME: envVars.HSM_BE_CORE_COMMON_NAME,
-  HSM_BE_CORE_COMMON_HOST: envVars.HSM_BE_CORE_COMMON_HOST,
-  HSM_BE_CORE_COMMON_PORT: envVars.HSM_BE_CORE_COMMON_PORT,
-
-  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME:
-    envVars.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_NAME,
-  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST:
-    envVars.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_HOST,
-  HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT:
-    envVars.HSM_BE_HAS_GAA_GTH_GSR_POSTULANTES_PORT,
-
-  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME:
-    envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_NAME,
-  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST:
-    envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_HOST,
-  HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT:
-    envVars.HSM_BE_HAS_GAA_GTH_GSR_TRABAJOS_PORT,
-
-  HSM_BE_CORE_DOCS_NAME: envVars.HSM_BE_CORE_DOCS_NAME,
-  HSM_BE_CORE_DOCS_HOST: envVars.HSM_BE_CORE_DOCS_HOST,
-  HSM_BE_CORE_DOCS_PORT: envVars.HSM_BE_CORE_DOCS_PORT,
+  hsm_be_core_auth: envVars.hsm_be_core_auth,
+  hsm_be_core_coms: envVars.hsm_be_core_coms,
+  hsm_be_core_users: envVars.hsm_be_core_users,
+  hsm_be_core_common: envVars.hsm_be_core_common,
+  hsm_be_has_gaa_gth_gsr_postulantes:
+    envVars.hsm_be_has_gaa_gth_gsr_postulantes,
+  hsm_be_has_gaa_gth_gsr_trabajos: envVars.hsm_be_has_gaa_gth_gsr_trabajos,
+  hsm_be_core_docs: envVars.hsm_be_core_docs,
 };

@@ -6,9 +6,7 @@ import { catchError } from 'rxjs';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    @Inject(envs.HSM_BE_CORE_AUTH_NAME) private client: ClientProxy,
-  ) {}
+  constructor(@Inject(envs.hsm_be_core_auth) private client: ClientProxy) {}
 
   @Post('pin/generation/:idDocs')
   pinGeneration(
@@ -32,6 +30,7 @@ export class AuthController {
     @Param('idDocs') idDocs: string,
     @Body('TIPO') TIPO: string,
     @Body('NUMERO_ENVIADO') NUMERO_ENVIADO: number,
+    @Body('NUMERO_RECIBIDO') NUMERO_RECIBIDO: number,
     @Req() request: Request,
   ) {
     let ip = request.headers['x-forwarded-for'] || request.ip;
@@ -42,7 +41,7 @@ export class AuthController {
       .send('pinValidation', {
         idDocs,
         TIPO,
-        NUMERO_ENVIADO,
+        NUMERO_RECIBIDO,
         ip,
       })
       .pipe(
