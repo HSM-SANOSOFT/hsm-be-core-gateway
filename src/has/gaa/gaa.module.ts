@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+
 import { GthModule } from './gth/gth.module';
 
 @Module({
-  imports: [GthModule]
+  imports: [GthModule],
 })
-export class GaaModule { }
+export class GaaModule {}
