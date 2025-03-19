@@ -16,6 +16,6 @@ export class TransaccionController {
     @Body()
     body: SolicitudPagoDto,
   ) {
-    return this.client.send('solicitudPago', body);
+    return this.client.send('createSolicitudPagon', { numDocId, ...body });
   }
 }
