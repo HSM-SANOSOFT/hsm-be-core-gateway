@@ -11,11 +11,9 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
-      enableDebugMessages: true,
       transform: true,
     }),
   );
-  //app.useGlobalFilters(new RcpCustomExceptionFilter());
   await app.listen(envs.hsm_be_core_gateway_port);
 }
 void bootstrap();
