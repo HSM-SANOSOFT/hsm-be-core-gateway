@@ -1,7 +1,7 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { envs } from 'config';
 import { catchError } from 'rxjs';
+import { envs } from 'src/config';
 
 @Controller('common')
 export class CommonController {

@@ -8,9 +8,9 @@ import {
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { envs } from 'config';
 //import { memoryStorage } from 'multer';
 import { catchError } from 'rxjs';
+import { envs } from 'src/config';
 
 @Controller('docs')
 export class DocumentosController {

@@ -1,6 +1,6 @@
 import { Controller, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { envs } from 'config';
+import { envs } from 'src/config';
 
 @Controller('compensacion')
 export class CompensacionController {
