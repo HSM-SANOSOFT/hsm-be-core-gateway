@@ -1,7 +1,6 @@
 import { Body, Controller, Inject, Param, Post, Req } from '@nestjs/common';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
 import { Request } from 'express';
-import { catchError } from 'rxjs';
 import { envs } from 'src/config';
 
 @Controller('auth')
@@ -18,11 +17,7 @@ export class AuthController {
     if (typeof ip === 'string' && ip.includes(',')) {
       ip = ip.split(',')[0].trim();
     }
-    return this.client.send('pinGeneration', { idDocs, TIPO, ip }).pipe(
-      catchError(err => {
-        throw new RpcException(err as object);
-      }),
-    );
+    return this.client.send('pinGeneration', { idDocs, TIPO, ip });
   }
 
   @Post('pin/validation/:idDocs')
@@ -37,17 +32,11 @@ export class AuthController {
     if (typeof ip === 'string' && ip.includes(',')) {
       ip = ip.split(',')[0].trim();
     }
-    return this.client
-      .send('pinValidation', {
-        idDocs,
-        TIPO,
-        NUMERO_RECIBIDO,
-        ip,
-      })
-      .pipe(
-        catchError(err => {
-          throw new RpcException(err as object);
-        }),
-      );
+    return this.client.send('pinValidation', {
+      idDocs,
+      TIPO,
+      NUMERO_RECIBIDO,
+      ip,
+    });
   }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
   Body,
   Controller,
@@ -23,48 +22,29 @@ export class PostulantesController {
     @Param('tipoDocumento') tipoDocumento: string,
     @Param('numeroDocumento') numeroDocumento: string,
   ) {
-    return this.client
-      .send('getPostulanteId', { tipoDocumento, numeroDocumento })
-      .pipe(
-        catchError(err => {
-          throw new RpcException(err);
-        }),
-      );
+    return this.client.send('getPostulanteId', {
+      tipoDocumento,
+      numeroDocumento,
+    });
   }
 
   @Get(':ID')
   getPostulante(@Param('ID', ParseIntPipe) ID: number) {
-    return this.client.send('getPostulante', { ID }).pipe(
-      catchError(err => {
-        throw new RpcException(err);
-      }),
-    );
+    return this.client.send('getPostulante', { ID });
   }
 
   @Post()
   createPostulante(@Body() data: object) {
-    return this.client.send('createPostulante', data).pipe(
-      catchError(err => {
-        throw new RpcException(err);
-      }),
-    );
+    return this.client.send('createPostulante', data);
   }
 
   @Patch(':ID')
   updatePostulante(@Param('ID', ParseIntPipe) ID: number, @Body() data: any) {
     data.ID = ID;
-    return this.client.send('updatePostulante', data).pipe(
-      catchError(err => {
-        throw new RpcException(err);
-      }),
-    );
+    return this.client.send('updatePostulante', data);
   }
   @Delete(':ID')
   deletePostulante(@Param('ID', ParseIntPipe) ID: number) {
-    return this.client.send('deletePostulante', { ID }).pipe(
-      catchError(err => {
-        throw new RpcException(err);
-      }),
-    );
+    return this.client.send('deletePostulante', { ID });
   }
 }

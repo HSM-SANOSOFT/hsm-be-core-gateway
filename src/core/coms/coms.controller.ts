@@ -9,10 +9,8 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { Express } from 'express';
-import { catchError } from 'rxjs';
 import { envs } from 'src/config';
 
 import { TemplateDto } from './dto/templateDto';
@@ -57,20 +55,12 @@ export class ComsController {
       data,
       files,
     };
-    return this.client.send('sendEmail', payload).pipe(
-      catchError(err => {
-        throw new RpcException(err as object);
-      }),
-    );
+    return this.client.send('sendEmail', payload);
   }
 
   @Get('email/resend/:id')
   resendEmail(@Param('id') id: string) {
-    return this.client.send('resendEmail', id).pipe(
-      catchError(err => {
-        throw new RpcException(err as object);
-      }),
-    );
+    return this.client.send('resendEmail', id);
   }
 
   @Post('sms/send')
@@ -81,12 +71,12 @@ export class ComsController {
     @Body('modulo') modulo: string,
     @Body('cedula') cedula: string,
   ) {
-    return this.client
-      .send('sendSms', { telefono, templateData, templateName, modulo, cedula })
-      .pipe(
-        catchError(err => {
-          throw new RpcException(err as object);
-        }),
-      );
+    return this.client.send('sendSms', {
+      telefono,
+      templateData,
+      templateName,
+      modulo,
+      cedula,
+    });
   }
 }
