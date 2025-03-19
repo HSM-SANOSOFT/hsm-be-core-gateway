@@ -13,9 +13,14 @@ interface EnvVars {
   hsm_be_core_coms: string;
   hsm_be_core_users: string;
   hsm_be_core_common: string;
+  hsm_be_core_docs: string;
+
   hsm_be_has_gaa_gth_gsr_postulantes: string;
   hsm_be_has_gaa_gth_gsr_trabajos: string;
-  hsm_be_core_docs: string;
+
+  hsm_be_has_cob_gdp_transaccion: string;
+  hsm_be_has_cob_gdp_compensacion: string;
+  hsm_be_has_cob_gdp_recaudo: string;
 }
 
 const envSchema = joi
@@ -30,9 +35,14 @@ const envSchema = joi
     hsm_be_core_coms: joi.string().required(),
     hsm_be_core_users: joi.string().required(),
     hsm_be_core_common: joi.string().required(),
+    hsm_be_core_docs: joi.string().required(),
+
     hsm_be_has_gaa_gth_gsr_postulantes: joi.string().required(),
     hsm_be_has_gaa_gth_gsr_trabajos: joi.string().required(),
-    hsm_be_core_docs: joi.string().required(),
+
+    hsm_be_has_cob_gdp_transaccion: joi.string().required(),
+    hsm_be_has_cob_gdp_compensacion: joi.string().required(),
+    hsm_be_has_cob_gdp_recaudo: joi.string().required(),
   })
   .unknown()
   .required();
@@ -56,8 +66,13 @@ export const envs = {
   hsm_be_core_coms: envVars.hsm_be_core_coms,
   hsm_be_core_users: envVars.hsm_be_core_users,
   hsm_be_core_common: envVars.hsm_be_core_common,
+  hsm_be_core_docs: envVars.hsm_be_core_docs,
+
   hsm_be_has_gaa_gth_gsr_postulantes:
     envVars.hsm_be_has_gaa_gth_gsr_postulantes,
   hsm_be_has_gaa_gth_gsr_trabajos: envVars.hsm_be_has_gaa_gth_gsr_trabajos,
-  hsm_be_core_docs: envVars.hsm_be_core_docs,
+
+  hsm_be_has_cob_gdp_transaccion: envVars.hsm_be_has_cob_gdp_transaccion,
+  hsm_be_has_cob_gdp_compensacion: envVars.hsm_be_has_cob_gdp_compensacion,
+  hsm_be_has_cob_gdp_recaudo: envVars.hsm_be_has_cob_gdp_recaudo,
 };
