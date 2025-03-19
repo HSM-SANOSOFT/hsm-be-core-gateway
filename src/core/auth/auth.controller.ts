@@ -1,8 +1,8 @@
 import { Body, Controller, Inject, Param, Post, Req } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { envs } from 'config';
 import { Request } from 'express';
 import { catchError } from 'rxjs';
+import { envs } from 'src/config';
 
 @Controller('auth')
 export class AuthController {

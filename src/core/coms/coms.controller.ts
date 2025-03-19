@@ -11,9 +11,9 @@ import {
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { envs } from 'config';
 import { Express } from 'express';
 import { catchError } from 'rxjs';
+import { envs } from 'src/config';
 
 import { TemplateDto } from './dto/templateDto';
 
@@ -90,4 +90,3 @@ export class ComsController {
       );
   }
 }
-

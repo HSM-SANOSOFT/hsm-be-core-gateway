@@ -11,8 +11,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { envs } from 'config';
 import { catchError } from 'rxjs';
+import { envs } from 'src/config';
 
 @Controller('postulantes')
 export class PostulantesController {

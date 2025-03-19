@@ -8,8 +8,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { envs } from 'config';
 import { catchError } from 'rxjs';
+import { envs } from 'src/config';
 
 @Controller('users')
 export class UsersController {

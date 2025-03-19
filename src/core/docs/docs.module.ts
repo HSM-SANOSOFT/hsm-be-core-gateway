@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { envs } from 'config';
+import { envs } from 'src/config';
 
 import { DocumentosController } from './docs.controller';
 @Module({
