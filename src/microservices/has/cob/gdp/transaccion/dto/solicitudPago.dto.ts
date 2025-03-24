@@ -3,22 +3,19 @@ import {
   IsNotEmpty,
   IsNumber,
   IsObject,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
 
 // Información de la factura
-export class InfoFacturaDTO {
+class InfoFacturaDTO {
   @IsNotEmpty()
   @IsString()
   document: string;
 
   @IsNotEmpty()
-  document_type:
-    | '04' // RUC
-    | '05' // Cédula ecuatoriana
-    | '06' // Pasaporte
-    | '08'; // Identificación del exterior
+  document_type: '04' | '05' | '06' | '08'; // RUC|Cédula ecuatoriana|Pasaporte|Identificación del exterior
 
   @IsNotEmpty()
   @IsString()
@@ -30,7 +27,7 @@ export class InfoFacturaDTO {
 
   @IsNotEmpty()
   @IsString()
-  phone: string;
+  phones: string;
 
   @IsNotEmpty()
   @IsString()
@@ -38,28 +35,42 @@ export class InfoFacturaDTO {
 
   @IsNotEmpty()
   type: 'Individual' | 'Company'; // Persona natural o Empresa
+
+  @IsNotEmpty()
+  @IsString()
+  description: string;
 }
 
 // Valores de la factura
-export class ValoresDTO {
+class ValoresDTO {
+  @IsNotEmpty()
+  @IsNumber()
+  amount_with_tax: number;
+
   @IsNotEmpty()
   @IsNumber()
   amount_without_tax: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  tax_value: number;
 }
 
 // Detalle del servicio o producto
-export class DetalleDTO {
+class DetalleDTO {
   @IsNotEmpty()
   @IsString()
   tipo: string;
 
   @IsNotEmpty()
+  @IsString()
+  compania: string;
+
+  @IsNotEmpty()
   @IsObject()
   data: Record<string, unknown>;
+}
+
+class configuracionDTO {
+  @IsOptional()
+  @IsString()
+  notify_url: string;
 }
 
 // DTO principal que agrupa todo
@@ -76,6 +87,11 @@ export class SolicitudPagoDto {
 
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => DetalleDTO)
+  @Type()
   detalle: DetalleDTO;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => configuracionDTO)
+  configuracion: configuracionDTO;
 }

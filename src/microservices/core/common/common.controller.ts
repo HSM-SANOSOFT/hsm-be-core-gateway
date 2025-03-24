@@ -10,4 +10,9 @@ export class CommonController {
   tipoAtencion() {
     return this.client.send('tipoAtencion', {});
   }
+
+  @Get('tipoServiciosChat')
+  tipoServiciosChat() {
+    return this.client.send('tipoServiciosChat', {});
+  }
 }
