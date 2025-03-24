@@ -11,11 +11,11 @@ export class TransaccionController {
   ) {}
 
   @Post('solicitudPago/:numDocId')
-  getLink(
+  createSolicitudPago(
     @Param('numDocId') numDocId: string,
     @Body()
     body: SolicitudPagoDto,
   ) {
-    return this.client.send('createSolicitudPagon', { numDocId, ...body });
+    return this.client.send('createSolicitudPago', { numDocId, ...body });
   }
 }
