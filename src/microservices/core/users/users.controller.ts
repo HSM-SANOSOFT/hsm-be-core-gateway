@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Inject,
+  Logger,
   Param,
   Post,
   Put,
@@ -12,6 +13,7 @@ import { envs } from 'src/config';
 
 @Controller('users')
 export class UsersController {
+  private readonly logger = new Logger();
   constructor(@Inject(envs.hsm_be_core_users) private client: ClientProxy) {}
 
   @Get(':IdDocs')
