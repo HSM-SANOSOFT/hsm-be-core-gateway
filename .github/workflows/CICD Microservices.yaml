@@ -49,7 +49,7 @@ jobs:
           cd ${{secrets.PATH_DOCKER_COMPOSE}}
           
           echo "Pulling the latest image for ${{vars.MICROSERVICE_NAME}}..."
-          sudo docker pull ghcr.io/hsm-sanosoft/${{vars.MICROSERVICE_NAME}}:latest
+          docker pull ghcr.io/hsm-sanosoft/${{vars.MICROSERVICE_NAME}}:latest
 
           echo "Restarting ${{vars.MICROSERVICE_NAME}} container..."
-          sudo docker compose -f docker-compose.prod.yml up -d --no-deps ${{vars.MICROSERVICE_NAME}}
+          docker compose -f docker-compose.prod.yml up -d --no-deps ${{vars.MICROSERVICE_NAME}}
