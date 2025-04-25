@@ -25,7 +25,7 @@ interface EnvVars {
 
 const envSchema = joi
   .object({
-    ENVIRONMENT: joi.string().required(),
+    ENVIRONMENT: joi.string().default('DEV'),
     JWT_SECRET: joi.string().default('sanosoft'),
 
     hsm_be_core_gateway: joi.string().required(),
