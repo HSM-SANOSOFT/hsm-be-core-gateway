@@ -20,7 +20,7 @@ RUN cd /tmp/oracle-client && \
 RUN npm install -g pnpm
 WORKDIR /app
 COPY package*.json .
-RUN pnpm install --prod
+RUN pnpm install
 COPY . .
 RUN pnpm build
 CMD ["pnpm", "run", "start"]
