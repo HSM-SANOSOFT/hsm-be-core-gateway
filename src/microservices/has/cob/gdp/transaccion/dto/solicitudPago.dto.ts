@@ -60,7 +60,7 @@ class DetalleDTO {
 
   @IsNotEmpty()
   @IsString()
-  compania: string;
+  compania: 'SAS' | 'CSI' | 'TEST';
 
   @IsNotEmpty()
   @IsObject()
