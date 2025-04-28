@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { envs } from 'src/config';
+import { envs, s } from 'src/config';
 
 import { DocumentosController } from './docs.controller';
 @Module({
@@ -8,10 +8,10 @@ import { DocumentosController } from './docs.controller';
   imports: [
     ClientsModule.register([
       {
-        name: envs.hsm_be_core_docs,
+        name: s.hsm_be_core_docs_name,
         transport: Transport.TCP,
         options: {
-          host: envs.hsm_be_core_docs,
+          host: envs.hsm_be_core_docs_host,
         },
       },
     ]),

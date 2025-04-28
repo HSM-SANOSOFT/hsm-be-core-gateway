@@ -10,11 +10,11 @@ import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { FileInterceptor } from '@nestjs/platform-express';
 //import { memoryStorage } from 'multer';
 import { catchError } from 'rxjs';
-import { envs } from 'src/config';
+import { envs,s } from 'src/config';
 
 @Controller('docs')
 export class DocumentosController {
-  @Inject(envs.hsm_be_core_docs)
+  @Inject(s.hsm_be_core_docs_name)
   private client: ClientProxy;
   /*
     @Post('/gsr/guardar')

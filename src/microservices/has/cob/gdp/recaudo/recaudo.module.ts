@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { envs } from 'src/config';
+import { envs, s } from 'src/config';
 
 import { RecaudoController } from './recaudo.controller';
 
@@ -9,10 +9,10 @@ import { RecaudoController } from './recaudo.controller';
   imports: [
     ClientsModule.register([
       {
-        name: envs.hsm_be_has_cob_gdp_recaudo,
+        name: s.hsm_be_has_cob_gdp_recaudo_name,
         transport: Transport.TCP,
         options: {
-          host: envs.hsm_be_has_cob_gdp_recaudo,
+          host: envs.hsm_be_has_cob_gdp_recaudo_host,
         },
       },
     ]),

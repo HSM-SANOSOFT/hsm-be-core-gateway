@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { envs } from 'src/config';
+import { envs, s } from 'src/config';
 
 import { AuthController } from './auth.controller';
 
@@ -9,10 +9,10 @@ import { AuthController } from './auth.controller';
   imports: [
     ClientsModule.register([
       {
-        name: envs.hsm_be_core_auth,
+        name: s.hsm_be_core_auth_name,
         transport: Transport.TCP,
         options: {
-          host: envs.hsm_be_core_auth,
+          host: envs.hsm_be_core_auth_host,
         },
       },
     ]),

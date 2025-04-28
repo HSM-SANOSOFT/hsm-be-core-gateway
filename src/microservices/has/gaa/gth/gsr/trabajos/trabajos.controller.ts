@@ -1,10 +1,10 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { envs } from 'src/config';
+import { s } from 'src/config';
 
 @Controller('trabajos')
 export class TrabajosController {
-  @Inject(envs.hsm_be_has_gaa_gth_gsr_trabajos)
+  @Inject(s.hsm_be_has_gaa_gth_gsr_trabajos_name)
   private client: ClientProxy;
 
   @Get()
