@@ -2,7 +2,6 @@ import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
-import { envs } from './config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +15,6 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  await app.listen(envs.hsm_be_core_gateway_port);
+  await app.listen(3000);
 }
 void bootstrap();

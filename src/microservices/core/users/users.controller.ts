@@ -9,12 +9,12 @@ import {
   Put,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { envs } from 'src/config';
+import { s } from 'src/config';
 
 @Controller('users')
 export class UsersController {
   private readonly logger = new Logger();
-  constructor(@Inject(envs.hsm_be_core_users) private client: ClientProxy) {}
+  constructor(@Inject(s.hsm_be_core_users_name) private client: ClientProxy) {}
 
   @Get(':IdDocs')
   getUser(@Param('IdDocs') IdDocs: string) {

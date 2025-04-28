@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { envs } from 'src/config';
+import { envs, s } from 'src/config';
 
 import { TransaccionController } from './transaccion.controller';
 
@@ -9,10 +9,10 @@ import { TransaccionController } from './transaccion.controller';
   imports: [
     ClientsModule.register([
       {
-        name: envs.hsm_be_has_cob_gdp_transaccion,
+        name: s.hsm_be_has_cob_gdp_transaccion_name,
         transport: Transport.TCP,
         options: {
-          host: envs.hsm_be_has_cob_gdp_transaccion,
+          host: envs.hsm_be_has_cob_gdp_transaccion_host,
         },
       },
     ]),
