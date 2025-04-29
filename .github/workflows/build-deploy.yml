@@ -5,7 +5,7 @@ on:
       - main
 jobs:
   build-and-deploy:
-    uses: HSM-SANOSOFT/.github/reusable-workflows/CICD-Microservices.yml@main
+    uses: HSM-SANOSOFT/.github/.github/workflows/CICD-Microservices.yml@main
     with:
       MICROSERVICE_NAME: ${{ vars.MICROSERVICE_NAME}}
       NAMESPACE: 'app'
