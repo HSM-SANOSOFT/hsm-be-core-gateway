@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { catchError } from 'rxjs';
-import { s } from 'src/config';
+import { sNames } from 'src/config';
 
 @Controller('postulantes')
 export class PostulantesController {
-  @Inject(s.hsm_be_has_gaa_gth_gsr_postulantes_name)
+  @Inject(sNames.hsm_be_has_gaa_gth_gsr_postulantes_name)
   private client: ClientProxy;
   @Get('/getPostulanteId/:tipoDocumento/:numeroDocumento')
   getPostulanteId(

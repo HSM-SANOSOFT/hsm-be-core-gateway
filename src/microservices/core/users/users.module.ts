@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { envs, s } from 'src/config';
+import { envs, sNames } from 'src/config';
 
 import { UsersController } from './users.controller';
 
@@ -9,7 +9,7 @@ import { UsersController } from './users.controller';
   imports: [
     ClientsModule.register([
       {
-        name: s.hsm_be_core_users_name,
+        name: sNames.hsm_be_core_users_name,
         transport: Transport.TCP,
         options: {
           host: envs.hsm_be_core_users_host,

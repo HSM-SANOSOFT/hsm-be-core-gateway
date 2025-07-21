@@ -1,11 +1,13 @@
 import { Body, Controller, Inject, Param, Post, Req } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Request } from 'express';
-import { s } from 'src/config';
+import { sNames } from 'src/config';
 
 @Controller('auth')
 export class AuthController {
-  constructor(@Inject(s.hsm_be_core_auth_name) private client: ClientProxy) {}
+  constructor(
+    @Inject(sNames.hsm_be_core_auth_name) private client: ClientProxy,
+  ) {}
 
   @Post('pin/generation/:idDocs')
   pinGeneration(

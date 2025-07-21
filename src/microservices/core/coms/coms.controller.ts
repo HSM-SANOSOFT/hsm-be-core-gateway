@@ -11,13 +11,15 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { s } from 'src/config';
+import { sNames } from 'src/config';
 
 import { TemplateDto } from './dto/templateDto';
 
 @Controller('coms')
 export class ComsController {
-  constructor(@Inject(s.hsm_be_core_coms_name) private client: ClientProxy) {}
+  constructor(
+    @Inject(sNames.hsm_be_core_coms_name) private client: ClientProxy,
+  ) {}
 
   @Post('email/send')
   @UseInterceptors(FilesInterceptor('files'))

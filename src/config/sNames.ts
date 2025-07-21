@@ -1,4 +1,4 @@
-export const s = {
+export const sNames = {
   hsm_be_core_auth_name: 'hsm-be-core-auth',
   hsm_be_core_gateway_name: 'hsm-be-core-gateway',
   hsm_be_core_coms_name: 'hsm-be-core-coms',
