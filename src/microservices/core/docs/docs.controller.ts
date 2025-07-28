@@ -1,16 +1,8 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Param,
-  ParseEnumPipe,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { sNames } from 'src/config/sNames';
 
-import { CreateDocumentoDto, DocumentTypeDto } from './dto';
+import { CreateDocumentoDto } from './dto';
 
 @Controller('docs')
 export class DocumentosController {

@@ -1,3 +1,7 @@
+import { IsNotEmpty, IsString } from 'class-validator';
+
 export class FacturasTypeDto {
-  id: string;
+  @IsString()
+  @IsNotEmpty()
+  title: string;
 }
