@@ -2,7 +2,7 @@ import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { sNames } from 'src/config/sNames';
 
-import { CreateDocumentoDto } from './dto';
+import { CreateDocumentoDto, DocumentTypeDto } from './dto';
 
 @Controller('docs')
 export class DocumentosController {
@@ -11,8 +11,8 @@ export class DocumentosController {
   ) {}
 
   @Get('/:type/:id')
-  getDocumento(@Param('type') type: string, @Param('id') id: string) {
-    return this.client.send('getDocumentoUrl', { data: { type, id } });
+  getDocumento(@Param('type') type: DocumentTypeDto, @Param('id') id: string) {
+    return this.client.send('getDocumento', { data: { type, id } });
   }
 
   @Post()

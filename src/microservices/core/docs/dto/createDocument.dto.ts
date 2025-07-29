@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsEnum, ValidateNested } from 'class-validator';
+import { IsEnum, IsString, ValidateNested } from 'class-validator';
 
 import type { DocumentoPayload } from '../type/document_payload.type';
 import { DocumentTypeDto, DocumentTypesDtosMap } from './document_type';
@@ -7,6 +7,9 @@ import { DocumentTypeDto, DocumentTypesDtosMap } from './document_type';
 export class CreateDocumentoDto {
   @IsEnum(DocumentTypeDto)
   type: DocumentTypeDto;
+
+  @IsString()
+  id: string;
 
   @ValidateNested()
   @Type(opts => {
