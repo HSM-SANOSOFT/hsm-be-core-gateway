@@ -1,8 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { envs, sNames } from 'src/config';
 
 import { DocumentosController } from './docs.controller';
+const logger = new Logger('DocumentosModule');
+logger.log('Microservice Docs Host: ' + envs.hsm_be_core_docs_host);
 @Module({
   controllers: [DocumentosController],
   imports: [
