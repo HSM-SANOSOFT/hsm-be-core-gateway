@@ -1,162 +1,370 @@
+
+import {IsString,IsNotEmpty,IsNumber,IsBoolean,IsArray,ValidateNested} from 'class-validator';
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 
-class ArchivoDto {
-  @IsString()
-  @IsNotEmpty()
-  CEDULA: string;
+class CondicionEdadDto {
+  @IsBoolean()
+  m1: boolean;
 
-  @IsString()
-  @IsNotEmpty()
-  PCN_NUMERO_HC: string;
+  @IsBoolean()
+  d: boolean;
 
-  @IsString()
-  @IsNotEmpty()
-  APELLIDO_PATERNO: string;
+  @IsBoolean()
+  m2: boolean;
 
-  @IsString()
-  @IsNotEmpty()
-  APELLIDO_MATERNO: string;
-
-  @IsString()
-  @IsNotEmpty()
-  PRIMER_NOMBRE: string;
-
-  @IsString()
-  @IsNotEmpty()
-  SEGUNDO_NOMBRE: string;
-
-  @IsString()
-  @IsNotEmpty()
-  SEXO: string;
-
-  @IsString()
-  @IsNotEmpty()
-  FECHA_NACIMIENTO: string;
-
-  @IsString()
-  @IsNotEmpty()
-  EDAD: string;
-
-  @IsString()
-  @IsNotEmpty()
-  TELEFONO: string;
-
-  @IsString()
-  @IsNotEmpty()
-  PRQ_CNT_PRV_CODIGO: string;
-
-  @IsString()
-  @IsNotEmpty()
-  PRQ_CNT_CODIGO: string;
-
-  @IsString()
-  @IsNotEmpty()
-  PRQ_CODIGO: string;
-
-  @IsString()
-  @IsNotEmpty()
-  SERVICIO: string;
-
-  @IsString()
-  @IsNotEmpty()
-  ESPECIALIDAD: string;
-
-  @IsString()
-  @IsNotEmpty()
-  RESUMEN: string;
-
-  @IsString()
-  @IsNotEmpty()
-  FECHA: string;
-
-  @IsString()
-  @IsNotEmpty()
-  HORA: string;
-
-  @IsString()
-  @IsNotEmpty()
-  NOMBRE_MED: string;
-
-  @IsString()
-  @IsNotEmpty()
-  PRIMER_APELLID_MED: string;
-
-  @IsString()
-  @IsNotEmpty()
-  SEGUNDO_APELLIDO_MED: string;
-
-  @IsString()
-  @IsNotEmpty()
-  CD_PER: string;
+  @IsBoolean()
+  a: boolean;
 }
 
-export class Hcu053DocumentTemplateDto {
-  @IsString()
-  @IsNotEmpty()
-  hallazgo: string;
+class MotivoDto {
+  @IsNumber()
+  numero: number;
 
   @IsString()
   @IsNotEmpty()
-  diag: string;
+  descripcion: string;
+
+  @IsBoolean()
+  seleccionado: boolean;
+}
+
+class ResidenciaDto {
+  @IsNumber()
+  provincia: number;
+
+  @IsNumber()
+  canton: number;
+
+  @IsNumber()
+  parroquia: number;
+}
+
+class ARefDto {
+  @IsString()
+  institucion_sistema: string;
+
+  @IsNumber()
+  unicodigo: number;
 
   @IsString()
-  @IsNotEmpty()
-  cod_d: string;
+  establecimiento_salud: string;
 
   @IsString()
-  @IsNotEmpty()
+  numero_historia_clinica: string;
+
+  @IsString()
+  numero_archivo: string;
+
+  @IsString()
+  primer_apellido: string;
+
+  @IsString()
+  segundo_apellido: string;
+
+  @IsString()
+  primer_nombre: string;
+
+  @IsString()
+  segundo_nombre: string;
+
+  @IsString()
+  sexo: string;
+
+  @IsString()
+  fecha_nacimiento: string;
+
+  @IsString()
+  edad: string;
+
+  @ValidateNested()
+  @Type(() => CondicionEdadDto)
+  condicion_edad: CondicionEdadDto;
+
+  @IsString()
+  telefono: string;
+
+  @IsString()
+  referencia: string;
+
+  @IsString()
+  derivacion: string;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => MotivoDto)
+  motivos: MotivoDto[];
+
+  @ValidateNested()
+  @Type(() => ResidenciaDto)
+  residencia: ResidenciaDto;
+}
+
+class BRefDto {
+  @IsString()
+  institucion_sistema: string;
+
+  @IsString()
+  establecimiento_salud: string;
+
+  @IsString()
+  servicio: string;
+
+  @IsString()
+  especialidad: string;
+}
+
+class CRefDto {
+  @IsString()
+  resumen_clinico: string;
+}
+
+class DRefDto {
+  @IsString()
+  hallazgos: string;
+}
+
+class DiagnosticoDto {
+  @IsNumber()
+  id: number;
+
+  @IsString()
+  descripcion: string;
+
+  @IsString()
+  cie: string;
+
+  @IsBoolean()
+  pre: boolean;
+
+  @IsBoolean()
+  def: boolean;
+}
+
+class ERefDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => DiagnosticoDto)
+  diagnosticos: DiagnosticoDto[];
+}
+
+class FRefDto {
+  @IsString()
+  fecha: string;
+
+  @IsString()
+  hora: string;
+
+  @IsString()
+  primer_nombre_med: string;
+
+  @IsString()
+  primer_apellido_med: string;
+
+  @IsString()
+  segundo_apellido_med: string;
+
+  @IsString()
+  documento_identificacion_med: string;
+
+  @IsString()
+  firma_med: string;
+
+  @IsString()
+  sello_med: string;
+}
+
+class JustificacionDto {
+  @IsBoolean()
+  si: boolean;
+
+  @IsBoolean()
+  no: boolean;
+}
+
+class GRefDto {
+  @ValidateNested()
+  @Type(() => JustificacionDto)
+  referencia_justificada: JustificacionDto;
+
+  @ValidateNested()
+  @Type(() => JustificacionDto)
+  derivacion_justificada: JustificacionDto;
+}
+
+class TipoDto {
+  @IsBoolean()
+  contrarreferencia: boolean;
+
+  @IsBoolean()
+  referencia_inversa: boolean;
+}
+
+class AContRefDto {
+  @IsString()
+  institucion_sistema: string;
+
+  @IsString()
+  unicodigo: string;
+
+  @IsString()
+  establecimiento_salud: string;
+
+  @IsString()
+  tipologia: string;
+
+  @IsString()
+  numero_historia_clinica: string;
+
+  @IsString()
+  numero_archivo: string;
+}
+
+class BContRefDto {
+  @IsString()
+  institucion_sistema: string;
+
+  @IsString()
+  establecimiento_salud: string;
+
+  @IsString()
+  distrito: string;
+
+  @IsString()
+  fecha: string;
+}
+
+class CContRefDto {
+  @IsString()
+  resumen_clinico: string;
+}
+
+class DContRefDto {
+  @IsString()
+  hallazgos: string;
+}
+
+class EContRefDto {
+  @IsString()
+  tratamientos: string;
+}
+
+class FContRefDiagnosticoDto {
+  @IsString()
+  id: string;
+
+  @IsString()
+  descripcion: string;
+
+  @IsString()
+  cie: string;
+
+  @IsString()
   pre: string;
 
   @IsString()
-  @IsNotEmpty()
   def: string;
+}
+
+class FContRefDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => FContRefDiagnosticoDto)
+  diagnosticos: FContRefDiagnosticoDto[];
+}
+
+class GContRefDto {
+  @IsString()
+  tratamiento_recomendado: string;
+}
+
+class HContRefDto {
+  @IsString()
+  fecha: string;
 
   @IsString()
-  @IsNotEmpty()
-  diag1: string;
+  hora: string;
 
   @IsString()
-  @IsNotEmpty()
-  cod_d1: string;
+  primer_nombre_med: string;
 
   @IsString()
-  @IsNotEmpty()
-  pre1: string;
+  primer_apellido_med: string;
 
   @IsString()
-  @IsNotEmpty()
-  def1: string;
+  segundo_apellido_med: string;
 
   @IsString()
-  @IsNotEmpty()
-  diag2: string;
+  documento_identificacion_med: string;
 
   @IsString()
-  @IsNotEmpty()
-  cod_d2: string;
+  firma_med: string;
 
   @IsString()
-  @IsNotEmpty()
-  pre2: string;
+  sello_med: string;
+}
 
-  @IsString()
-  @IsNotEmpty()
-  def2: string;
-
-  @IsString()
-  @IsNotEmpty()
-  firma_referencia: string;
-
-  @IsString()
-  @IsNotEmpty()
-  sello_referencia: string;
-
-  @IsString()
-  @IsNotEmpty()
-  table_med_responsable: string;
+export class Hcu053DocumentTemplateDto {
+  @ValidateNested()
+  @Type(() => ARefDto)
+  A_ref: ARefDto;
 
   @ValidateNested()
-  @Type(() => ArchivoDto)
-  archivo: ArchivoDto;
+  @Type(() => BRefDto)
+  B_ref: BRefDto;
+
+  @ValidateNested()
+  @Type(() => CRefDto)
+  C_ref: CRefDto;
+
+  @ValidateNested()
+  @Type(() => DRefDto)
+  D_ref: DRefDto;
+
+  @ValidateNested()
+  @Type(() => ERefDto)
+  E_ref: ERefDto;
+
+  @ValidateNested()
+  @Type(() => FRefDto)
+  F_ref: FRefDto;
+
+  @ValidateNested()
+  @Type(() => GRefDto)
+  G_ref: GRefDto;
+
+  @ValidateNested()
+  @Type(() => TipoDto)
+  tipo: TipoDto;
+
+  @ValidateNested()
+  @Type(() => AContRefDto)
+  A_contref: AContRefDto;
+
+  @ValidateNested()
+  @Type(() => BContRefDto)
+  B_contref: BContRefDto;
+
+  @ValidateNested()
+  @Type(() => CContRefDto)
+  C_contref: CContRefDto;
+
+  @ValidateNested()
+  @Type(() => DContRefDto)
+  D_contref: DContRefDto;
+
+  @ValidateNested()
+  @Type(() => EContRefDto)
+  E_contref: EContRefDto;
+
+  @ValidateNested()
+  @Type(() => FContRefDto)
+  F_contref: FContRefDto;
+
+  @ValidateNested()
+  @Type(() => GContRefDto)
+  G_contref: GContRefDto;
+
+  @ValidateNested()
+  @Type(() => HContRefDto)
+  H_contref: HContRefDto;
 }
