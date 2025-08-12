@@ -17,6 +17,8 @@ interface EnvVars {
   hsm_be_has_cob_gdp_transaccion_host: string;
   hsm_be_has_cob_gdp_compensacion_host: string;
   hsm_be_has_cob_gdp_recaudo_host: string;
+
+  hsm_be_his_paciente_host: string;
 }
 
 const envSchema = joi
@@ -35,6 +37,8 @@ const envSchema = joi
     hsm_be_has_cob_gdp_transaccion_host: joi.string().required(),
     hsm_be_has_cob_gdp_compensacion_host: joi.string().required(),
     hsm_be_has_cob_gdp_recaudo_host: joi.string().required(),
+
+    hsm_be_his_paciente_host: joi.string().required(),
   })
   .unknown()
   .required();
@@ -66,4 +70,6 @@ export const envs = {
   hsm_be_has_cob_gdp_compensacion_host:
     envVars.hsm_be_has_cob_gdp_compensacion_host,
   hsm_be_has_cob_gdp_recaudo_host: envVars.hsm_be_has_cob_gdp_recaudo_host,
+
+  hsm_be_his_paciente_host: envVars.hsm_be_his_paciente_host,
 };

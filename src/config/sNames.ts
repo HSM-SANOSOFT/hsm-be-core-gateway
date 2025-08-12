@@ -10,4 +10,5 @@ export const sNames = {
   hsm_be_has_cob_gdp_transaccion_name: 'hsm-be-has-cob-gdp-transaccion',
   hsm_be_has_cob_gdp_compensacion_name: 'hsm-be-has-cob-gdp-compensacion',
   hsm_be_has_cob_gdp_recaudo_name: 'hsm-be-has-cob-gdp-recaudo',
+  hsm_be_his_paciente: 'hsm-be-his-paciente',
 };
