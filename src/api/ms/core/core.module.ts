@@ -4,6 +4,7 @@ import { AuthController } from './controllers/auth.controller';
 import { CommonController } from './controllers/common.controller';
 import { ComsController } from './controllers/coms.controller';
 import { DocsController } from './controllers/docs.controller';
+import { UsersController } from './controllers/users.controller';
 
 @Module({
   controllers: [
@@ -11,6 +12,7 @@ import { DocsController } from './controllers/docs.controller';
     CommonController,
     ComsController,
     DocsController,
+    UsersController,
   ],
 })
 export class CoreModule {}
