@@ -12,17 +12,17 @@ import { sNames } from 'src/config';
 
 import { GetPatientType } from './type/patient';
 
-@Controller()
+@Controller('Paciente')
 export class PacienteController {
   constructor(
     @Inject(sNames.hsm_be_his_paciente) private client: ClientProxy,
   ) {}
-  @Get('Patient/:id')
+  @Get(':id')
   getPatientbyId(@Param('id', ParseIntPipe) id: number) {
     const payload: GetPatientType = { param: { id } };
     return this.client.send('getPatient', payload);
   }
-  @Get('Patient')
+  @Get()
   getPatientByIdentifier(
     @Query('identifier')
     identifier: string,
@@ -40,7 +40,7 @@ export class PacienteController {
     return this.client.send('getPatient', payload);
   }
 
-  @Get('Patient/:id/Consent')
+  @Get(':id/Consentimiento')
   getPatientConsent(
     @Param('id') id: string,
     @Query('category') category?: string,
