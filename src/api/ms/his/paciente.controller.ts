@@ -8,9 +8,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { GetPatientType } from 'src/api/type/his/patient';
 import { sNames } from 'src/config';
-
-import { GetPatientType } from '../../../api/type/his/patient';
 
 @Controller('Paciente')
 export class PacienteController {
