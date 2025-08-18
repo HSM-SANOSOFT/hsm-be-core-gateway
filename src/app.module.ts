@@ -1,17 +1,20 @@
 import { Module } from '@nestjs/common';
-
-//import { APP_GUARD } from '@nestjs/core';
-//import { AuthTokenGuard } from '../guards/auth.guard';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { CoreModule } from './microservices/core/core.module';
-import { HasModule } from './microservices/has/has.module';
-import { HisModule } from './microservices/his/his.module';
+import { RouterModule } from '@nestjs/core';
+import { ApiModule } from 'src/api/api.module';
+import { AppController } from 'src/app.controller';
+import { AppService } from 'src/app.service';
+import { ProvidersModule } from 'src/providers/providers.module';
+import { WebhookModule } from 'src/webhook/webhook.module';
 
 @Module({
-  imports: [CoreModule, HasModule, HisModule],
+  imports: [
+    ApiModule,
+    WebhookModule,
+    ProvidersModule,
+    RouterModule.register([{ path: 'webhook', module: WebhookModule }]),
+  ],
   controllers: [AppController],
-  providers: [AppService /*{ provide: APP_GUARD, useClass: AuthTokenGuard }*/],
+  providers: [AppService],
   exports: [],
 })
 export class AppModule {}
