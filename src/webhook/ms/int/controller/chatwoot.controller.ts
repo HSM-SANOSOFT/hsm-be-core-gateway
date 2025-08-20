@@ -6,7 +6,7 @@ import { ChatwootWebhookPayload } from 'src/webhook/type/int';
 export class ChatwootController {
   private readonly logger = new Logger(ChatwootController.name);
 
-  @Post('incoming')
+  @Post('ConversationCreated')
   handleIncomingMessage(@Body('payload') payload: ChatwootWebhookPayload) {
     const channel = payload.channel.split('::')[1];
     const contact_id = payload.meta.sender.id;
