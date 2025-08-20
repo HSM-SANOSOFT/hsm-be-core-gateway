@@ -7,7 +7,7 @@ export class ChatwootController {
   private readonly logger = new Logger(ChatwootController.name);
 
   @Post('ConversationCreated')
-  handleIncomingMessage(@Body('payload') payload: ChatwootWebhookPayload) {
+  handleIncomingMessage(@Body() payload: ChatwootWebhookPayload) {
     const channel = payload.channel.split('::')[1];
     const contact_id = payload.meta.sender.id;
     const conversation_id = payload.id;
@@ -17,7 +17,7 @@ export class ChatwootController {
     const name = payload.meta.sender.name;
     const phone = payload.meta.sender.phone_number;
     const custom_attributes = payload.meta.sender.custom_attributes;
-    const message = payload.messages[0]?.content || null;
+    const message = payload.messages[0]?.processed_message_content || null;
 
     const data: {
       channel: string;
@@ -43,7 +43,7 @@ export class ChatwootController {
       message,
     };
 
-    this.logger.log('Received Chatwoot message:', JSON.stringify(data));
+    this.logger.log('Chatwoot Conversation Created:', JSON.stringify(data));
 
     axios
       .post(
@@ -51,7 +51,10 @@ export class ChatwootController {
         data,
       )
       .catch(err => {
-        this.logger.error('Error sending user data to chatwoot:', err);
+        this.logger.error(
+          'Error sending user data to chatwoot:',
+          JSON.stringify(err),
+        );
       });
   }
 }
