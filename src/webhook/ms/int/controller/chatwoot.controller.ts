@@ -19,7 +19,7 @@ export class ChatwootController {
     const custom_attributes = payload.meta.sender.custom_attributes;
     const message = payload.messages[0]?.content || null;
 
-    const user: {
+    const data: {
       channel: string;
       contact_id: number;
       conversation_id: number;
@@ -43,10 +43,12 @@ export class ChatwootController {
       message,
     };
 
+    this.logger.log('Received Chatwoot message:', JSON.stringify(data));
+
     axios
       .post(
         'https://hospitalsm.org/sanosoft/API/CRM_VENTAS/chatwootDatos.php',
-        user,
+        data,
       )
       .catch(err => {
         this.logger.error('Error sending user data to chatwoot:', err);
