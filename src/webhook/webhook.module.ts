@@ -1,4 +1,8 @@
 import { Module } from '@nestjs/common';
 
-@Module({})
+import { IntModule } from './ms/int/int.module';
+
+@Module({
+  imports: [IntModule],
+})
 export class WebhookModule {}
