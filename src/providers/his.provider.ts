@@ -7,6 +7,8 @@ export const HisProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_his_paciente_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
 ]);

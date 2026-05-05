@@ -7,6 +7,8 @@ export const HasProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_has_cob_gdp_compensacion_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
   {
@@ -14,6 +16,8 @@ export const HasProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_has_cob_gdp_recaudo_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
   {
@@ -21,6 +25,8 @@ export const HasProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_has_cob_gdp_transaccion_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
   {
@@ -28,6 +34,8 @@ export const HasProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_has_gaa_gth_gsr_postulantes_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
   {
@@ -35,6 +43,8 @@ export const HasProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_has_gaa_gth_gsr_trabajos_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
 ]);

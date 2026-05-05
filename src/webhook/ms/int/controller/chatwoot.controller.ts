@@ -1,5 +1,5 @@
 import { Body, Controller, Logger, Post } from '@nestjs/common';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { ChatwootWebhookPayload } from 'src/webhook/type/int';
 
 @Controller('chatwoot')
@@ -50,11 +50,13 @@ export class ChatwootController {
         'https://hospitalsm.org/sanosoft/API/CRM_VENTAS/chatwootDatos.php',
         data,
       )
-      .catch(err => {
-        this.logger.error(
-          'Error sending user data to chatwoot:',
-          JSON.stringify(err),
-        );
+      .catch((err: AxiosError) => {
+        this.logger.error('Error sending data to chatwootDatos.php', {
+          status: err.response?.status,
+          data: err.response?.data,
+          message: err.message,
+          code: err.code,
+        });
       });
   }
 
@@ -102,11 +104,13 @@ export class ChatwootController {
         'https://hospitalsm.org/sanosoft/API/CRM_VENTAS/chatwootDatos.php',
         data,
       )
-      .catch(err => {
-        this.logger.error(
-          'Error sending user data to chatwoot:',
-          JSON.stringify(err),
-        );
+      .catch((err: AxiosError) => {
+        this.logger.error('Error sending data to chatwootDatos.php', {
+          status: err.response?.status,
+          data: err.response?.data,
+          message: err.message,
+          code: err.code,
+        });
       });
   }
 }
