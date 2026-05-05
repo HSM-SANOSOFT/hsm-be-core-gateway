@@ -7,6 +7,8 @@ export const CoreProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_core_auth_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
   {
@@ -14,6 +16,8 @@ export const CoreProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_core_common_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
   {
@@ -21,6 +25,8 @@ export const CoreProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_core_coms_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
   {
@@ -28,6 +34,8 @@ export const CoreProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_core_docs_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
   {
@@ -35,6 +43,8 @@ export const CoreProvider = ClientsModule.register([
     transport: Transport.TCP,
     options: {
       host: envs.hsm_be_core_users_host,
+      retryAttempts: 5,
+      retryDelay: 3000,
     },
   },
 ]);
