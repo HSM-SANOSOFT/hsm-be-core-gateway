@@ -20,11 +20,13 @@ export class UsersController {
 
   @Get(':IdDocs')
   getUser(@Param('IdDocs') IdDocs: string) {
+    this.logger.debug(`Fetching user with ID: ${IdDocs}`);
     return this.client.send('getUser', IdDocs);
   }
 
   @Get('LOPD/:IdDocs')
   getUsersLOPD(@Param('IdDocs') IdDocs: string) {
+    this.logger.debug(`Fetching LOPD user with ID: ${IdDocs}`);
     return this.client.send('getUsersLOPD', IdDocs);
   }
 
@@ -34,6 +36,7 @@ export class UsersController {
     @Body('STATUS') STATUS: string,
     @Body('TIPO_ENVIO') TIPO_ENVIO: string,
   ) {
+    this.logger.debug(`Creating LOPD user with CEDULA: ${CEDULA}, STATUS: ${STATUS}, TIPO_ENVIO: ${TIPO_ENVIO}`);
     return this.client.send('createUserLOPD', { CEDULA, STATUS, TIPO_ENVIO });
   }
 
@@ -43,6 +46,7 @@ export class UsersController {
     @Body('STATUS') STATUS: string,
     @Body('TIPO_ENVIO') TIPO_ENVIO: string,
   ) {
+    this.logger.debug(`Updating LOPD user with CEDULA: ${CEDULA}, STATUS: ${STATUS}, TIPO_ENVIO: ${TIPO_ENVIO}`);
     return this.client.send('updateUserLOPD', { CEDULA, STATUS, TIPO_ENVIO });
   }
 }

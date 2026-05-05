@@ -13,9 +13,11 @@ import { ClientProxy } from '@nestjs/microservices';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { TemplateDto } from 'src/api/dto/core/coms/templateDto';
 import { sNames } from 'src/config';
+import {Logger} from "@nestjs/common";
 
 @Controller('coms')
 export class ComsController {
+  private readonly logger = new Logger(ComsController.name);
   constructor(
     @Inject(sNames.hsm_be_core_coms_name) private client: ClientProxy,
   ) {}
@@ -56,11 +58,13 @@ export class ComsController {
       data,
       files,
     };
+    this.logger.debug(`Sending email with payload: ${JSON.stringify(payload)}`);
     return this.client.send('sendEmail', payload);
   }
 
   @Get('email/resend/:id')
   resendEmail(@Param('id') id: string) {
+    this.logger.debug(`Resending email with ID: ${id}`);
     return this.client.send('resendEmail', id);
   }
 
@@ -72,6 +76,7 @@ export class ComsController {
     @Body('modulo') modulo: string,
     @Body('cedula') cedula: string,
   ) {
+    this.logger.debug(`Sending SMS to ${telefono} with template ${templateName}`);
     return this.client.send('sendSms', {
       telefono,
       templateData,
