@@ -58,7 +58,14 @@ export class ComsController {
       data,
       files,
     };
-    this.logger.debug(`Sending email with payload: ${JSON.stringify(payload)}`);
+
+    const fileMeta = (files ?? []).map((f) => ({
+      name: f.originalname,
+      mimetype: f.mimetype,
+      size: f.size,
+    }));
+    
+    this.logger.debug(`Sending email: ${JSON.stringify({ email: data.email, template: data.template, files: fileMeta })}`);
     return this.client.send('sendEmail', payload);
   }
 
