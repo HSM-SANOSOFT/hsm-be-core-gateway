@@ -19,6 +19,14 @@ describe('prepared email HTTP boundary', () => {
     await request(app.getHttpServer()).post('/coms/email/send-prepared').send({ data }).expect(201);
     expect(send).toHaveBeenCalledWith('sendPreparedEmail', { data, files: [] });
   });
+  it('forwards BCC separately and rejects invalid hidden recipients before dispatch', async () => {
+    const mixed = { ...data, bcc: ['hidden@example.org'] };
+    await request(app.getHttpServer()).post('/coms/email/send-prepared').send({ data: mixed }).expect(201);
+    expect(send).toHaveBeenCalledWith('sendPreparedEmail', { data: mixed, files: [] });
+    send.mockClear();
+    await request(app.getHttpServer()).post('/coms/email/send-prepared').send({ data: { ...mixed, bcc: ['bad'] } }).expect(400);
+    expect(send).not.toHaveBeenCalled();
+  });
   it('preserves complete content and repeated multipart attachments', async () => {
     await request(app.getHttpServer()).post('/coms/email/send-prepared').field('data', JSON.stringify(data)).attach('files', Buffer.from('one'), 'one.txt').attach('files', Buffer.from('two'), 'two.txt').expect(201);
     const payload = (send.mock.calls[0] as unknown as [string, { data: unknown; files: Express.Multer.File[] }])[1];
