@@ -34,6 +34,21 @@ describe('prepared email HTTP boundary', () => {
     expect(payload.data).toEqual(data);
     expect(payload.files.map(f => f.buffer.toString())).toEqual(['one', 'two']);
   });
+  it.each([['R'], ['r'], [null], [''], ['N']])('accepts and forwards tipo_correo %p', async tipo_correo => {
+    const typed = { ...data, tipo_correo };
+    await request(app.getHttpServer()).post('/coms/email/send-prepared').send({ data: typed }).expect(201);
+    expect(send).toHaveBeenCalledWith('sendPreparedEmail', { data: typed, files: [] });
+  });
+  it('keeps legacy requests without tipo_correo unchanged (multipart and JSON)', async () => {
+    await request(app.getHttpServer()).post('/coms/email/send-prepared').field('data', JSON.stringify(data)).expect(201);
+    const payload = (send.mock.calls[0] as unknown as [string, { data: Record<string, unknown> }])[1];
+    expect(payload.data).toEqual(data);
+    expect('tipo_correo' in payload.data).toBe(false);
+  });
+  it.each([[1], [true], [{}], ['x'.repeat(21)]])('rejects invalid tipo_correo %p before dispatch', async tipo_correo => {
+    await request(app.getHttpServer()).post('/coms/email/send-prepared').send({ data: { ...data, tipo_correo } }).expect(400);
+    expect(send).not.toHaveBeenCalled();
+  });
   it('rejects malformed JSON and subject header injection', async () => {
     await request(app.getHttpServer()).post('/coms/email/send-prepared').field('data', '{bad').expect(400);
     await request(app.getHttpServer()).post('/coms/email/send-prepared').send({ data: { ...data, subject: 'x\r\nBcc: another' } }).expect(400);
